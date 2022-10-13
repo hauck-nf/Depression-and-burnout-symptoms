@@ -1,0 +1,1609 @@
+Mplus VERSION 7.11
+MUTHEN & MUTHEN
+06/15/2022   3:10 PM
+
+INPUT INSTRUCTIONS
+
+  TITLE: Your title goes here
+  DATA: FILE = "EBB.dat";
+  VARIABLE:
+  NAMES = ID Hospital Idade Sexo Ecivil Nfilhos Formacao Tempoformacao Tempotrabalho
+       Tempofuncao Cargahoraria Turno Outraatividade EVENT1 EVENT2 EVENT3 EVENT4
+       EVENT5 EVENT6 EVENT7 EVENT8 EVENT9 EVENT10 EVENT11 EVENT12 EVENT13 EVENT14
+       EVENT15 EVENT16 EVENT17 EVENT18 EVENT19 EVENT20 EVENT21 EVENT22 EVENT23 EVENT24
+       EVENT25 EVENT26 EVENT27 EVENT28 EVENT29 EVENT30 EVENT31 EVENT32 EVENT33 EVENT34
+       EVENT35 EVENT36 EVENT37 EVENT38 EVENT39 EVENT40 ESUL1 ESUL2 ESUL3 ESUL4 ESUL5
+       ESUL6 ESUL7 ESUL8 ESUL9 ESUL10 ESUL11 ESUL12 ESUL13 ESUL14 ESUL15 ESUL16 ESUL17
+       ESUL18 ESUL19 ESUL20 ESUL21 EBADEP1 EBADEP2 EBADEP3 EBADEP4 EBADEP5 EBADEP6
+       EBADEP7 EBADEP8 EBADEP9 EBADEP10 EBADEP11 EBADEP12 EBADEP13 EBADEP14 EBADEP15
+       EBADEP16 EBADEP17 EBADEP18 EBADEP19 EBADEP20 EBADEP21 EBADEP22 EBADEP23
+       EBADEP24 EBADEP25 EBADEP26 EBADEP27 EBADEP28 EBADEP29 EBADEP30 EBADEP31
+       EBADEP32 EBADEP33 EBADEP34 EBADEP35 EBADEP36 EBADEP37 EBADEP38 EBADEP39
+       EBADEP40 EBADEP41 EBADEP42 EBADEP43 EBADEP44 EBADEP45 ECOGA1 ECOGA2 ECOGA3
+       ECOGA4 ECOGA5 ECOGA6 ECOGA7 ECOGA8 ECOGA9 ECOGA10 ECOGA11 ECOGA12 ECOGA13
+       ECOGA14 ECOGA15 ECOGA16 ECOGA17 ECOGA18 ECOGA19 ECOGA20 ECOGA21 ECOGA22 ECOGA23
+       ECOGA24 ECOGA25 ECOGA26 ECOGA27 ECOGA28 ECOGA29 ECOGA30 ECOGA31 ECOGA32 ECOGA33
+       ECOGA34 ECOGA35 ECOGA36 ECOGA37 ECOGA38 ECOGA39 ECOGA40 EBB1 EBB2 EBB3 EBB4
+       EBB5 EBB6 EBB7 EBB8 EBB9 EBB10 EBB11 EBB12 EBB13 EBB14 EBB15 EBB16 EBB17 EBB18
+       EBB19 EBB20 EBB21 EBB22 EBB23 EBB24 EBB25 EBB26 EBB27 EBB28 EBB29 EBB30 EBB31
+       EBB32 EBB33 EBB34 EBB35 EBB36 EBB37 EBB38 EVENTTot ESULF1 ESULF2 ESULTot
+       EBADEPTot ECOGAF1 ECOGAF2 ECOGAF3 ECOGAF4 ECOGATot EBBF1 EBBF2 EBBTot
+       IdadeClass FormacaoClass TempoTrabClass TempoFuncaoClass EVENTF1 EVENTF2
+       EVENTF3 EVENT1Class EVENT2Class EVENTF3Class ESULF1Class ESULF2Class
+       EBADEPClass ECOGAF1Class ECOGAF2Class ECOGAF3Classi ECOGAF4Class EBBF1Class
+       EBBF2Class;
+  MISSING=.;
+  IDVARIABLE = ID;
+  USEVARIABLE =
+  !EBADEP1 EBADEP2 EBADEP4 EBADEP5 EBADEP10 EBADEP18
+  !EBADEP23 EBADEP24 EBADEP28 EBADEP29 EBADEP31 EBADEP38
+  !EBADEP40 EBADEP43 EBADEP45
+  EBB5 EBB6 EBB8 EBB9 EBB13 EBB14 EBB17 EBB18
+  EBB20 EBB22 EBB23 EBB24 EBB26 EBB27 EBB29 EBB31
+  EBB34 EBB35 EBB36 EBB38
+
+  !EBADEPTot
+  !EBBF1 EBBF2
+  !EVENTTot
+  !EXHAUST
+  ;
+  !CLASSES = c(4);
+  !DEFINE:
+  !EXHAUST = ((4-EBB5)+(4-EBB6)+EBB8+EBB9+EBB13+EBB14+(4-EBB17)+EBB18+
+  !EBB20+EBB22+(4-EBB23)+EBB24+EBB26+EBB27+(4-EBB29)+EBB31+
+  !EBB34+(4-EBB35)+(4-EBB36)+(4-EBB38))/20;
+
+  !STANDARDIZE EBADEPTot EXHAUST;
+  CATEGORICAL = ALL;
+  ANALYSIS:
+  TYPE=EFA 1 3;
+  !ROTATION=BI-GEOMIN(OBLIQUE);
+  !TYPE = MIXTURE;
+  !ESTIMATOR IS MLR;
+  !STARTS = 100 10;!COMEÇAR TESTANDO COM MENOS, TIPO 100 10. O VALOR ALTO É PARA AS SOLUÇÕES
+  !LRTSTARTS = 0 0 100 10
+  !OPTSEED = 136842;
+  !ALGORITHM=INTEGRATION;
+  !PROCESS = 3 (STARTS);
+  !ITERATIONS = 10000;
+  !CONVERGENCE = 0.001;
+
+  MODEL:
+  !dep by EBADEP1 EBADEP2 EBADEP4 EBADEP5 EBADEP10 EBADEP18
+  !EBADEP23 EBADEP24 EBADEP28 EBADEP29 EBADEP31 EBADEP38
+  !EBADEP40 EBADEP43 EBADEP45;
+  !burn by EBB5@-.79 EBB6 EBB8 EBB9 EBB13 EBB14 EBB17 EBB18
+  !EBB20 EBB22 EBB23 EBB24 EBB26 EBB27 EBB29 EBB31
+  !EBB34 EBB35 EBB36 EBB38;
+
+  !F1-F3 by EBADEP1 EBADEP2 EBADEP4 EBADEP5 EBADEP10 EBADEP18
+  !EBADEP23 EBADEP24 EBADEP28 EBADEP29 EBADEP31 EBADEP38
+  !EBADEP40 EBADEP43 EBADEP45
+  !EBB5 EBB6 EBB8 EBB9 EBB13 EBB14 EBB17 EBB18
+  !EBB20 EBB22 EBB23 EBB24 EBB26 EBB27 EBB29 EBB31
+  !EBB34 EBB35 EBB36 EBB38 (*1);
+
+  !FG by EBADEP1* EBADEP2 EBADEP4 EBADEP5 EBADEP10 EBADEP18
+  !EBADEP23 EBADEP24 EBADEP28 EBADEP29 EBADEP31 EBADEP38
+  !EBADEP40 EBADEP43 EBADEP45
+  !EBB5 EBB6 EBB8 EBB9 EBB13 EBB14 EBB17 EBB18
+  !EBB20 EBB22 EBB23 EBB24 EBB26 EBB27 EBB29 EBB31
+  !EBB34 EBB35 EBB36 EBB38 ;
+  !FG@1;
+
+  !DEP by EBADEP1* EBADEP2 EBADEP4 EBADEP5 EBADEP10 EBADEP18
+  !EBADEP23 EBADEP24 EBADEP28 EBADEP29 EBADEP31 EBADEP38
+  !EBADEP40 EBADEP43 EBADEP45;
+  !DEP@1;
+
+  BURN by EBB5* EBB6 EBB8 EBB9 EBB13 EBB14 EBB17 EBB18
+  EBB20 EBB22 EBB23 EBB24 EBB26 EBB27 EBB29 EBB31
+  EBB34 EBB35 EBB36 EBB38;
+  BURN@1;
+
+  !FG with DEP@0 BURN@0;
+
+  !acq by
+  !EBADEP1@1 EBADEP2@1 EBADEP4@1 EBADEP5@1 EBADEP10@1 EBADEP18@1
+  !EBADEP23@1 EBADEP24@1 EBADEP28@1 EBADEP29@1 EBADEP31@1 EBADEP38@1
+  !EBADEP40@1 EBADEP43@1 EBADEP45@1
+  !EBB5@1 EBB6@1 EBB8@1 EBB9@1 EBB13@1 EBB14@1 EBB17@1 EBB18@1
+  !EBB20@1 EBB22@1 EBB23@1 EBB24@1 EBB26@1 EBB27@1 EBB29@1 EBB31@1
+  !EBB34@1 EBB35@1 EBB36@1 EBB38@1;
+  !acq;
+  !acq with FG@0 DEP@0 BURN@0;
+
+
+  !F1 by EBB8* EBB9 EBB13 EBB14  EBB18
+  !EBB20 EBB22 EBB23 EBB24 EBB26 EBB27 EBB29 EBB31
+  !EBB34 EBB35 EBB36 EBB38;
+  !F1@1;
+
+  !F2 by EBB5* EBB6 EBB17 EBB23 EBB29 EBB34 EBB35 EBB36 EBB38;
+  !F2@1;
+
+  !acq by EBB5@1 EBB6@1 EBB8@1 EBB9@1 EBB13@1 EBB14@1 EBB17@1 EBB18@1
+  !EBB20@1 EBB22@1 EBB23@1 EBB24@1 EBB26@1 EBB27@1 EBB29@1 EBB31@1
+  !EBB34@1 EBB35@1 EBB36@1 EBB38@1;
+  !acq@.109;
+  !acq with F1@0 F2@0;
+
+
+
+  !acq by EBADEP1@1 EBADEP2@1 EBADEP4@1 EBADEP5@1 EBADEP10@1 EBADEP18@1
+  !EBADEP23@1 EBADEP24@1 EBADEP28@1 EBADEP29@1 EBADEP31@1 EBADEP38@1
+  !EBADEP40@1 EBADEP43@1 EBADEP45@1
+  !EBB5@1 EBB6@1 EBB8@1 EBB9@1 EBB13@1 EBB14@1 EBB17@1 EBB18@1
+  !EBB20@1 EBB22@1 EBB23@1 EBB24@1 EBB26@1 EBB27@1 EBB29@1 EBB31@1
+  !EBB34@1 EBB35@1 EBB36@1 EBB38@1;
+  !acq@.103;
+  !acq with F1@0 F2@0 F3@0;
+  !acq with FG@0 DEP@0 BURN@0;
+
+
+  MODEL:
+  !%OVERALL%
+  !c ON EVENTTot;
+
+
+  Output: standardized modindices;
+  !OUTPUT: tech11 tech14;
+
+  !PLOT:
+  !type is plot3;
+  !series is EBADEPTot (1) EXHAUST (2);
+
+  !SAVEDATA:
+  !file is 4 classes.txt;
+  !save is cprob;
+  !format is free;
+
+
+
+*** WARNING in MODEL command
+  The MODEL command is not used for TYPE=EFA.  All MODEL statements will be ignored.
+*** WARNING in OUTPUT command
+  STANDARDIZED (STD, STDY, STDYX) options are not available for TYPE=EFA.
+  Request for STANDARDIZED options will be ignored.  Note that STANDARDIZED options
+  are available with the use of EFA factors (ESEM) declared in the MODEL command.
+*** WARNING
+  Data set contains cases with missing on all variables.
+  These cases were not included in the analysis.
+  Number of cases with missing on all variables:  2
+   3 WARNING(S) FOUND IN THE INPUT INSTRUCTIONS
+
+
+
+Your title goes here
+
+SUMMARY OF ANALYSIS
+
+Number of groups                                                 1
+Number of observations                                         582
+
+Number of dependent variables                                   20
+Number of independent variables                                  0
+Number of continuous latent variables                            0
+
+Observed dependent variables
+
+  Binary and ordered categorical (ordinal)
+   EBB5        EBB6        EBB8        EBB9        EBB13       EBB14
+   EBB17       EBB18       EBB20       EBB22       EBB23       EBB24
+   EBB26       EBB27       EBB29       EBB31       EBB34       EBB35
+   EBB36       EBB38
+
+Variables with special functions
+
+  ID variable           ID
+
+Estimator                                                    WLSMV
+Rotation                                                    GEOMIN
+Row standardization                                    CORRELATION
+Type of rotation                                           OBLIQUE
+Epsilon value                                               Varies
+Maximum number of iterations                                  1000
+Convergence criterion                                    0.500D-04
+Maximum number of steepest descent iterations                   20
+Maximum number of iterations for H1                           2000
+Convergence criterion for H1                             0.100D-03
+Optimization Specifications for the Exploratory Factor Analysis
+Rotation Algorithm
+  Number of random starts                                       30
+  Maximum number of iterations                               10000
+  Derivative convergence criterion                       0.100D-04
+
+Input data file(s)
+  EBB.dat
+
+Input data format  FREE
+
+
+SUMMARY OF DATA
+
+     Number of missing data patterns           100
+
+
+COVARIANCE COVERAGE OF DATA
+
+Minimum covariance coverage value   0.100
+
+
+     PROPORTION OF DATA PRESENT
+
+
+           Covariance Coverage
+              EBB5          EBB6          EBB8          EBB9          EBB13
+              ________      ________      ________      ________      ________
+ EBB5           0.962
+ EBB6           0.942         0.964
+ EBB8           0.952         0.954         0.990
+ EBB9           0.952         0.952         0.978         0.988
+ EBB13          0.950         0.952         0.978         0.979         0.988
+ EBB14          0.954         0.954         0.978         0.978         0.978
+ EBB17          0.935         0.936         0.955         0.952         0.950
+ EBB18          0.950         0.950         0.976         0.974         0.974
+ EBB20          0.957         0.959         0.985         0.983         0.983
+ EBB22          0.957         0.957         0.983         0.981         0.981
+ EBB23          0.897         0.900         0.918         0.912         0.914
+ EBB24          0.950         0.952         0.979         0.976         0.976
+ EBB26          0.952         0.954         0.981         0.978         0.978
+ EBB27          0.943         0.945         0.967         0.964         0.964
+ EBB29          0.878         0.880         0.895         0.897         0.899
+ EBB31          0.950         0.952         0.978         0.976         0.976
+ EBB34          0.897         0.893         0.916         0.914         0.918
+ EBB35          0.933         0.936         0.955         0.955         0.957
+ EBB36          0.911         0.914         0.931         0.930         0.930
+ EBB38          0.873         0.869         0.888         0.887         0.890
+
+
+           Covariance Coverage
+              EBB14         EBB17         EBB18         EBB20         EBB22
+              ________      ________      ________      ________      ________
+ EBB14          0.988
+ EBB17          0.955         0.962
+ EBB18          0.976         0.952         0.986
+ EBB20          0.983         0.957         0.981         0.995
+ EBB22          0.981         0.955         0.979         0.988         0.993
+ EBB23          0.914         0.897         0.912         0.919         0.919
+ EBB24          0.976         0.954         0.974         0.983         0.981
+ EBB26          0.978         0.952         0.978         0.985         0.983
+ EBB27          0.964         0.942         0.964         0.971         0.969
+ EBB29          0.897         0.876         0.893         0.902         0.900
+ EBB31          0.976         0.950         0.974         0.983         0.983
+ EBB34          0.916         0.897         0.911         0.919         0.919
+ EBB35          0.955         0.933         0.952         0.962         0.959
+ EBB36          0.930         0.911         0.926         0.935         0.933
+ EBB38          0.888         0.869         0.885         0.892         0.892
+
+
+           Covariance Coverage
+              EBB23         EBB24         EBB26         EBB27         EBB29
+              ________      ________      ________      ________      ________
+ EBB23          0.924
+ EBB24          0.916         0.988
+ EBB26          0.916         0.978         0.990
+ EBB27          0.904         0.966         0.967         0.976
+ EBB29          0.844         0.895         0.895         0.890         0.905
+ EBB31          0.912         0.976         0.978         0.964         0.900
+ EBB34          0.861         0.912         0.914         0.904         0.854
+ EBB35          0.902         0.954         0.955         0.943         0.885
+ EBB36          0.885         0.928         0.931         0.923         0.861
+ EBB38          0.840         0.885         0.887         0.878         0.828
+
+
+           Covariance Coverage
+              EBB31         EBB34         EBB35         EBB36         EBB38
+              ________      ________      ________      ________      ________
+ EBB31          0.988
+ EBB34          0.914         0.924
+ EBB35          0.954         0.909         0.966
+ EBB36          0.928         0.887         0.926         0.940
+ EBB38          0.887         0.847         0.880         0.861         0.897
+
+
+UNIVARIATE PROPORTIONS AND COUNTS FOR CATEGORICAL VARIABLES
+
+    EBB5
+      Category 1    0.354      198.000
+      Category 2    0.102       57.000
+      Category 3    0.545      305.000
+    EBB6
+      Category 1    0.337      189.000
+      Category 2    0.123       69.000
+      Category 3    0.540      303.000
+    EBB8
+      Category 1    0.278      160.000
+      Category 2    0.505      291.000
+      Category 3    0.161       93.000
+      Category 4    0.056       32.000
+    EBB9
+      Category 1    0.063       36.000
+      Category 2    0.374      215.000
+      Category 3    0.346      199.000
+      Category 4    0.217      125.000
+    EBB13
+      Category 1    0.391      225.000
+      Category 2    0.468      269.000
+      Category 3    0.103       59.000
+      Category 4    0.038       22.000
+    EBB14
+      Category 1    0.230      132.000
+      Category 2    0.471      271.000
+      Category 3    0.195      112.000
+      Category 4    0.104       60.000
+    EBB17
+      Category 1    0.434      243.000
+      Category 2    0.179      100.000
+      Category 3    0.387      217.000
+    EBB18
+      Category 1    0.415      238.000
+      Category 2    0.432      248.000
+      Category 3    0.098       56.000
+      Category 4    0.056       32.000
+    EBB20
+      Category 1    0.617      357.000
+      Category 2    0.306      177.000
+      Category 3    0.062       36.000
+      Category 4    0.016        9.000
+    EBB22
+      Category 1    0.401      232.000
+      Category 2    0.452      261.000
+      Category 3    0.093       54.000
+      Category 4    0.054       31.000
+    EBB23
+      Category 1    0.290      156.000
+      Category 2    0.165       89.000
+      Category 3    0.545      293.000
+    EBB24
+      Category 1    0.360      207.000
+      Category 2    0.426      245.000
+      Category 3    0.144       83.000
+      Category 4    0.070       40.000
+    EBB26
+      Category 1    0.674      388.000
+      Category 2    0.259      149.000
+      Category 3    0.043       25.000
+      Category 4    0.024       14.000
+    EBB27
+      Category 1    0.472      268.000
+      Category 2    0.377      214.000
+      Category 3    0.113       64.000
+      Category 4    0.039       22.000
+    EBB29
+      Category 1    0.452      238.000
+      Category 2    0.264      139.000
+      Category 3    0.285      150.000
+    EBB31
+      Category 1    0.532      306.000
+      Category 2    0.323      186.000
+      Category 3    0.097       56.000
+      Category 4    0.047       27.000
+    EBB34
+      Category 1    0.379      204.000
+      Category 2    0.184       99.000
+      Category 3    0.437      235.000
+    EBB35
+      Category 1    0.331      186.000
+      Category 2    0.128       72.000
+      Category 3    0.541      304.000
+    EBB36
+      Category 1    0.366      200.000
+      Category 2    0.218      119.000
+      Category 3    0.417      228.000
+    EBB38
+      Category 1    0.312      163.000
+      Category 2    0.163       85.000
+      Category 3    0.525      274.000
+
+
+
+SUMMARY OF MODEL FIT INFORMATION
+
+
+                   Number of                   Degrees of
+     Model        Parameters      Chi-Square    Freedom     P-Value
+
+     1-factor          20           1962.807       170       0.0000
+     2-factor          39            543.285       151       0.0000
+     3-factor          57            342.575       133       0.0000
+
+                                               Degrees of
+     Models Compared              Chi-Square    Freedom     P-Value
+
+     1-factor against 2-factor       677.764        19       0.0000
+     2-factor against 3-factor       164.170        18       0.0000
+
+
+
+RESULTS FOR EXPLORATORY FACTOR ANALYSIS
+
+
+           EIGENVALUES FOR SAMPLE CORRELATION MATRIX
+                  1             2             3             4             5
+              ________      ________      ________      ________      ________
+      1         8.539         2.969         1.036         0.885         0.790
+
+
+           EIGENVALUES FOR SAMPLE CORRELATION MATRIX
+                  6             7             8             9            10
+              ________      ________      ________      ________      ________
+      1         0.752         0.646         0.593         0.521         0.480
+
+
+           EIGENVALUES FOR SAMPLE CORRELATION MATRIX
+                 11            12            13            14            15
+              ________      ________      ________      ________      ________
+      1         0.438         0.413         0.364         0.335         0.285
+
+
+           EIGENVALUES FOR SAMPLE CORRELATION MATRIX
+                 16            17            18            19            20
+              ________      ________      ________      ________      ________
+      1         0.267         0.206         0.198         0.181         0.103
+
+
+EXPLORATORY FACTOR ANALYSIS WITH 1 FACTOR(S):
+
+
+MODEL FIT INFORMATION
+
+Number of Free Parameters                       20
+
+Chi-Square Test of Model Fit
+
+          Value                           1962.807*
+          Degrees of Freedom                   170
+          P-Value                           0.0000
+
+*   The chi-square value for MLM, MLMV, MLR, ULSMV, WLSM and WLSMV cannot be used
+    for chi-square difference testing in the regular way.  MLM, MLR and WLSM
+    chi-square difference testing is described on the Mplus website.  MLMV, WLSMV,
+    and ULSMV difference testing is done using the DIFFTEST option.
+
+RMSEA (Root Mean Square Error Of Approximation)
+
+          Estimate                           0.135
+          90 Percent C.I.                    0.129  0.140
+          Probability RMSEA <= .05           0.000
+
+CFI/TLI
+
+          CFI                                0.839
+          TLI                                0.820
+
+Chi-Square Test of Model Fit for the Baseline Model
+
+          Value                          11346.108
+          Degrees of Freedom                   190
+          P-Value                           0.0000
+
+SRMR (Standardized Root Mean Square Residual)
+
+          Value                              0.136
+
+
+
+MINIMUM ROTATION FUNCTION VALUE       8.85183
+
+
+
+           GEOMIN ROTATED LOADINGS (* significant at 5% level)
+                  1
+              ________
+ EBB5          -0.752*
+ EBB6          -0.730*
+ EBB8           0.501*
+ EBB9           0.575*
+ EBB13          0.719*
+ EBB14          0.811*
+ EBB17         -0.542*
+ EBB18          0.654*
+ EBB20          0.745*
+ EBB22          0.767*
+ EBB23         -0.600*
+ EBB24          0.836*
+ EBB26          0.446*
+ EBB27          0.715*
+ EBB29         -0.419*
+ EBB31          0.747*
+ EBB34         -0.582*
+ EBB35         -0.664*
+ EBB36         -0.647*
+ EBB38         -0.656*
+
+
+           GEOMIN FACTOR CORRELATIONS (* significant at 5% level)
+                  1
+              ________
+      1         1.000
+
+
+           ESTIMATED RESIDUAL VARIANCES
+              EBB5          EBB6          EBB8          EBB9          EBB13
+              ________      ________      ________      ________      ________
+      1         0.435         0.467         0.749         0.670         0.482
+
+
+           ESTIMATED RESIDUAL VARIANCES
+              EBB14         EBB17         EBB18         EBB20         EBB22
+              ________      ________      ________      ________      ________
+      1         0.342         0.706         0.573         0.446         0.411
+
+
+           ESTIMATED RESIDUAL VARIANCES
+              EBB23         EBB24         EBB26         EBB27         EBB29
+              ________      ________      ________      ________      ________
+      1         0.640         0.301         0.801         0.488         0.825
+
+
+           ESTIMATED RESIDUAL VARIANCES
+              EBB31         EBB34         EBB35         EBB36         EBB38
+              ________      ________      ________      ________      ________
+      1         0.442         0.662         0.559         0.581         0.569
+
+
+           S.E. GEOMIN ROTATED LOADINGS
+                  1
+              ________
+ EBB5           0.026
+ EBB6           0.027
+ EBB8           0.035
+ EBB9           0.029
+ EBB13          0.024
+ EBB14          0.016
+ EBB17          0.033
+ EBB18          0.028
+ EBB20          0.027
+ EBB22          0.022
+ EBB23          0.034
+ EBB24          0.016
+ EBB26          0.042
+ EBB27          0.025
+ EBB29          0.039
+ EBB31          0.025
+ EBB34          0.034
+ EBB35          0.031
+ EBB36          0.028
+ EBB38          0.032
+
+
+           S.E. GEOMIN FACTOR CORRELATIONS
+                  1
+              ________
+      1         0.000
+
+
+           S.E. ESTIMATED RESIDUAL VARIANCES
+              EBB5          EBB6          EBB8          EBB9          EBB13
+              ________      ________      ________      ________      ________
+      1         0.040         0.040         0.035         0.034         0.035
+
+
+           S.E. ESTIMATED RESIDUAL VARIANCES
+              EBB14         EBB17         EBB18         EBB20         EBB22
+              ________      ________      ________      ________      ________
+      1         0.026         0.036         0.036         0.040         0.033
+
+
+           S.E. ESTIMATED RESIDUAL VARIANCES
+              EBB23         EBB24         EBB26         EBB27         EBB29
+              ________      ________      ________      ________      ________
+      1         0.040         0.028         0.038         0.035         0.032
+
+
+           S.E. ESTIMATED RESIDUAL VARIANCES
+              EBB31         EBB34         EBB35         EBB36         EBB38
+              ________      ________      ________      ________      ________
+      1         0.038         0.040         0.041         0.036         0.042
+
+
+           Est./S.E. GEOMIN ROTATED LOADINGS
+                  1
+              ________
+ EBB5         -28.505
+ EBB6         -26.752
+ EBB8          14.496
+ EBB9          19.601
+ EBB13         29.564
+ EBB14         50.282
+ EBB17        -16.392
+ EBB18         23.463
+ EBB20         27.407
+ EBB22         35.225
+ EBB23        -17.821
+ EBB24         50.765
+ EBB26         10.559
+ EBB27         29.014
+ EBB29        -10.840
+ EBB31         29.576
+ EBB34        -17.069
+ EBB35        -21.276
+ EBB36        -23.371
+ EBB38        -20.570
+
+
+           Est./S.E. GEOMIN FACTOR CORRELATIONS
+                  1
+              ________
+      1         0.000
+
+
+           Est./S.E. ESTIMATED RESIDUAL VARIANCES
+              EBB5          EBB6          EBB8          EBB9          EBB13
+              ________      ________      ________      ________      ________
+      1        10.954        11.703        21.665        19.879        13.779
+
+
+           Est./S.E. ESTIMATED RESIDUAL VARIANCES
+              EBB14         EBB17         EBB18         EBB20         EBB22
+              ________      ________      ________      ________      ________
+      1        13.090        19.697        15.726        11.011        12.303
+
+
+           Est./S.E. ESTIMATED RESIDUAL VARIANCES
+              EBB23         EBB24         EBB26         EBB27         EBB29
+              ________      ________      ________      ________      ________
+      1        15.849        10.907        21.277        13.845        25.513
+
+
+           Est./S.E. ESTIMATED RESIDUAL VARIANCES
+              EBB31         EBB34         EBB35         EBB36         EBB38
+              ________      ________      ________      ________      ________
+      1        11.731        16.704        13.510        16.220        13.603
+
+
+EXPLORATORY FACTOR ANALYSIS WITH 2 FACTOR(S):
+
+
+MODEL FIT INFORMATION
+
+Number of Free Parameters                       39
+
+Chi-Square Test of Model Fit
+
+          Value                            543.285*
+          Degrees of Freedom                   151
+          P-Value                           0.0000
+
+*   The chi-square value for MLM, MLMV, MLR, ULSMV, WLSM and WLSMV cannot be used
+    for chi-square difference testing in the regular way.  MLM, MLR and WLSM
+    chi-square difference testing is described on the Mplus website.  MLMV, WLSMV,
+    and ULSMV difference testing is done using the DIFFTEST option.
+
+RMSEA (Root Mean Square Error Of Approximation)
+
+          Estimate                           0.067
+          90 Percent C.I.                    0.061  0.073
+          Probability RMSEA <= .05           0.000
+
+CFI/TLI
+
+          CFI                                0.965
+          TLI                                0.956
+
+Chi-Square Test of Model Fit for the Baseline Model
+
+          Value                          11346.108
+          Degrees of Freedom                   190
+          P-Value                           0.0000
+
+SRMR (Standardized Root Mean Square Residual)
+
+          Value                              0.049
+
+
+
+MINIMUM ROTATION FUNCTION VALUE       0.99058
+
+
+
+           GEOMIN ROTATED LOADINGS (* significant at 5% level)
+                  1             2
+              ________      ________
+ EBB5          -0.173*        0.739*
+ EBB6          -0.152*        0.729*
+ EBB8           0.535*       -0.015
+ EBB9           0.650*        0.063
+ EBB13          0.749*       -0.009
+ EBB14          0.847*        0.022
+ EBB17          0.032         0.715*
+ EBB18          0.679*       -0.021
+ EBB20          0.723*       -0.100*
+ EBB22          0.768*       -0.049
+ EBB23         -0.127*        0.620*
+ EBB24          0.878*        0.019
+ EBB26          0.466*       -0.033
+ EBB27          0.864*        0.168*
+ EBB29          0.048         0.587*
+ EBB31          0.729*       -0.090
+ EBB34          0.063         0.771*
+ EBB35          0.021         0.828*
+ EBB36         -0.026         0.765*
+ EBB38         -0.107         0.696*
+
+
+           GEOMIN FACTOR CORRELATIONS (* significant at 5% level)
+                  1             2
+              ________      ________
+      1         1.000
+      2        -0.464*        1.000
+
+
+           ESTIMATED RESIDUAL VARIANCES
+              EBB5          EBB6          EBB8          EBB9          EBB13
+              ________      ________      ________      ________      ________
+      1         0.304         0.342         0.706         0.612         0.432
+
+
+           ESTIMATED RESIDUAL VARIANCES
+              EBB14         EBB17         EBB18         EBB20         EBB22
+              ________      ________      ________      ________      ________
+      1         0.299         0.510         0.525         0.400         0.373
+
+
+           ESTIMATED RESIDUAL VARIANCES
+              EBB23         EBB24         EBB26         EBB27         EBB29
+              ________      ________      ________      ________      ________
+      1         0.527         0.245         0.767         0.360         0.679
+
+
+           ESTIMATED RESIDUAL VARIANCES
+              EBB31         EBB34         EBB35         EBB36         EBB38
+              ________      ________      ________      ________      ________
+      1         0.400         0.447         0.330         0.396         0.436
+
+
+           S.E. GEOMIN ROTATED LOADINGS
+                  1             2
+              ________      ________
+ EBB5           0.067         0.046
+ EBB6           0.067         0.045
+ EBB8           0.042         0.048
+ EBB9           0.035         0.054
+ EBB13          0.025         0.026
+ EBB14          0.023         0.039
+ EBB17          0.051         0.042
+ EBB18          0.030         0.044
+ EBB20          0.035         0.050
+ EBB22          0.031         0.048
+ EBB23          0.061         0.050
+ EBB24          0.024         0.042
+ EBB26          0.052         0.056
+ EBB27          0.028         0.049
+ EBB29          0.053         0.046
+ EBB31          0.033         0.048
+ EBB34          0.048         0.036
+ EBB35          0.028         0.027
+ EBB36          0.052         0.039
+ EBB38          0.058         0.044
+
+
+           S.E. GEOMIN FACTOR CORRELATIONS
+                  1             2
+              ________      ________
+      1         0.000
+      2         0.045         0.000
+
+
+           S.E. ESTIMATED RESIDUAL VARIANCES
+              EBB5          EBB6          EBB8          EBB9          EBB13
+              ________      ________      ________      ________      ________
+      1         0.040         0.040         0.037         0.033         0.034
+
+
+           S.E. ESTIMATED RESIDUAL VARIANCES
+              EBB14         EBB17         EBB18         EBB20         EBB22
+              ________      ________      ________      ________      ________
+      1         0.024         0.046         0.036         0.041         0.033
+
+
+           S.E. ESTIMATED RESIDUAL VARIANCES
+              EBB23         EBB24         EBB26         EBB27         EBB29
+              ________      ________      ________      ________      ________
+      1         0.046         0.025         0.042         0.032         0.045
+
+
+           S.E. ESTIMATED RESIDUAL VARIANCES
+              EBB31         EBB34         EBB35         EBB36         EBB38
+              ________      ________      ________      ________      ________
+      1         0.038         0.045         0.040         0.040         0.045
+
+
+           Est./S.E. GEOMIN ROTATED LOADINGS
+                  1             2
+              ________      ________
+ EBB5          -2.597        16.167
+ EBB6          -2.268        16.158
+ EBB8          12.867        -0.317
+ EBB9          18.615         1.175
+ EBB13         30.207        -0.367
+ EBB14         36.652         0.563
+ EBB17          0.639        17.135
+ EBB18         22.295        -0.473
+ EBB20         20.811        -2.016
+ EBB22         24.895        -1.020
+ EBB23         -2.068        12.345
+ EBB24         36.706         0.447
+ EBB26          8.891        -0.587
+ EBB27         31.012         3.413
+ EBB29          0.901        12.719
+ EBB31         22.423        -1.888
+ EBB34          1.312        21.250
+ EBB35          0.737        30.696
+ EBB36         -0.503        19.608
+ EBB38         -1.854        15.695
+
+
+           Est./S.E. GEOMIN FACTOR CORRELATIONS
+                  1             2
+              ________      ________
+      1         0.000
+      2       -10.330         0.000
+
+
+           Est./S.E. ESTIMATED RESIDUAL VARIANCES
+              EBB5          EBB6          EBB8          EBB9          EBB13
+              ________      ________      ________      ________      ________
+      1         7.676         8.586        18.870        18.404        12.799
+
+
+           Est./S.E. ESTIMATED RESIDUAL VARIANCES
+              EBB14         EBB17         EBB18         EBB20         EBB22
+              ________      ________      ________      ________      ________
+      1        12.251        11.152        14.726         9.825        11.230
+
+
+           Est./S.E. ESTIMATED RESIDUAL VARIANCES
+              EBB23         EBB24         EBB26         EBB27         EBB29
+              ________      ________      ________      ________      ________
+      1        11.584         9.755        18.219        11.365        15.245
+
+
+           Est./S.E. ESTIMATED RESIDUAL VARIANCES
+              EBB31         EBB34         EBB35         EBB36         EBB38
+              ________      ________      ________      ________      ________
+      1        10.554         9.947         8.174         9.820         9.750
+
+
+           FACTOR STRUCTURE
+                  1             2
+              ________      ________
+ EBB5          -0.516         0.820
+ EBB6          -0.490         0.800
+ EBB8           0.542        -0.263
+ EBB9           0.621        -0.238
+ EBB13          0.754        -0.357
+ EBB14          0.837        -0.371
+ EBB17         -0.299         0.700
+ EBB18          0.689        -0.336
+ EBB20          0.769        -0.435
+ EBB22          0.791        -0.405
+ EBB23         -0.414         0.678
+ EBB24          0.869        -0.388
+ EBB26          0.482        -0.249
+ EBB27          0.786        -0.232
+ EBB29         -0.224         0.565
+ EBB31          0.771        -0.428
+ EBB34         -0.294         0.742
+ EBB35         -0.363         0.818
+ EBB36         -0.381         0.777
+ EBB38         -0.429         0.745
+
+
+EXPLORATORY FACTOR ANALYSIS WITH 3 FACTOR(S):
+
+
+MODEL FIT INFORMATION
+
+Number of Free Parameters                       57
+
+Chi-Square Test of Model Fit
+
+          Value                            342.575*
+          Degrees of Freedom                   133
+          P-Value                           0.0000
+
+*   The chi-square value for MLM, MLMV, MLR, ULSMV, WLSM and WLSMV cannot be used
+    for chi-square difference testing in the regular way.  MLM, MLR and WLSM
+    chi-square difference testing is described on the Mplus website.  MLMV, WLSMV,
+    and ULSMV difference testing is done using the DIFFTEST option.
+
+RMSEA (Root Mean Square Error Of Approximation)
+
+          Estimate                           0.052
+          90 Percent C.I.                    0.045  0.059
+          Probability RMSEA <= .05           0.302
+
+CFI/TLI
+
+          CFI                                0.981
+          TLI                                0.973
+
+Chi-Square Test of Model Fit for the Baseline Model
+
+          Value                          11346.108
+          Degrees of Freedom                   190
+          P-Value                           0.0000
+
+SRMR (Standardized Root Mean Square Residual)
+
+          Value                              0.039
+
+
+
+MINIMUM ROTATION FUNCTION VALUE       0.62935
+
+
+
+           GEOMIN ROTATED LOADINGS (* significant at 5% level)
+                  1             2             3
+              ________      ________      ________
+ EBB5           0.516*       -0.011         0.664*
+ EBB6           0.494*        0.001         0.648*
+ EBB8           0.154         0.571*       -0.041
+ EBB9           0.244         0.711*        0.028
+ EBB13         -0.132         0.715*        0.002
+ EBB14          0.069         0.860*        0.003
+ EBB17          0.131         0.104         0.727*
+ EBB18         -0.233         0.623*        0.010
+ EBB20         -0.159         0.674*       -0.091
+ EBB22         -0.021         0.756*       -0.058
+ EBB23          0.109        -0.065         0.633*
+ EBB24          0.089         0.894*       -0.005
+ EBB26          0.033         0.472*       -0.042
+ EBB27         -0.077         0.849*        0.175*
+ EBB29         -0.055         0.061         0.613*
+ EBB31          0.103         0.742*       -0.121*
+ EBB34         -0.193*        0.034         0.795*
+ EBB35         -0.283*       -0.019         0.885*
+ EBB36         -0.012         0.006         0.792*
+ EBB38          0.026        -0.067         0.719*
+
+
+           GEOMIN FACTOR CORRELATIONS (* significant at 5% level)
+                  1             2             3
+              ________      ________      ________
+      1         1.000
+      2        -0.302*        1.000
+      3         0.156        -0.489*        1.000
+
+
+           ESTIMATED RESIDUAL VARIANCES
+              EBB5          EBB6          EBB8          EBB9          EBB13
+              ________      ________      ________      ________      ________
+      1         0.175         0.237         0.681         0.556         0.416
+
+
+           ESTIMATED RESIDUAL VARIANCES
+              EBB14         EBB17         EBB18         EBB20         EBB22
+              ________      ________      ________      ________      ________
+      1         0.294         0.496         0.477         0.383         0.372
+
+
+           ESTIMATED RESIDUAL VARIANCES
+              EBB23         EBB24         EBB26         EBB27         EBB29
+              ________      ________      ________      ________      ________
+      1         0.518         0.236         0.765         0.353         0.663
+
+
+           ESTIMATED RESIDUAL VARIANCES
+              EBB31         EBB34         EBB35         EBB36         EBB38
+              ________      ________      ________      ________      ________
+      1         0.387         0.400         0.202         0.380         0.424
+
+
+           S.E. GEOMIN ROTATED LOADINGS
+                  1             2             3
+              ________      ________      ________
+ EBB5           0.077         0.036         0.083
+ EBB6           0.074         0.031         0.082
+ EBB8           0.108         0.053         0.054
+ EBB9           0.133         0.047         0.040
+ EBB13          0.141         0.057         0.036
+ EBB14          0.155         0.051         0.032
+ EBB17          0.079         0.054         0.051
+ EBB18          0.120         0.059         0.026
+ EBB20          0.127         0.057         0.050
+ EBB22          0.106         0.045         0.046
+ EBB23          0.076         0.062         0.052
+ EBB24          0.153         0.053         0.033
+ EBB26          0.092         0.063         0.057
+ EBB27          0.166         0.070         0.053
+ EBB29          0.082         0.060         0.048
+ EBB31          0.132         0.051         0.050
+ EBB34          0.082         0.049         0.043
+ EBB35          0.073         0.017         0.043
+ EBB36          0.047         0.048         0.036
+ EBB38          0.059         0.053         0.041
+
+
+           S.E. GEOMIN FACTOR CORRELATIONS
+                  1             2             3
+              ________      ________      ________
+      1         0.000
+      2         0.137         0.000
+      3         0.121         0.043         0.000
+
+
+           S.E. ESTIMATED RESIDUAL VARIANCES
+              EBB5          EBB6          EBB8          EBB9          EBB13
+              ________      ________      ________      ________      ________
+      1         0.053         0.053         0.038         0.038         0.034
+
+
+           S.E. ESTIMATED RESIDUAL VARIANCES
+              EBB14         EBB17         EBB18         EBB20         EBB22
+              ________      ________      ________      ________      ________
+      1         0.025         0.047         0.037         0.041         0.033
+
+
+           S.E. ESTIMATED RESIDUAL VARIANCES
+              EBB23         EBB24         EBB26         EBB27         EBB29
+              ________      ________      ________      ________      ________
+      1         0.046         0.025         0.042         0.032         0.046
+
+
+           S.E. ESTIMATED RESIDUAL VARIANCES
+              EBB31         EBB34         EBB35         EBB36         EBB38
+              ________      ________      ________      ________      ________
+      1         0.038         0.046         0.045         0.041         0.045
+
+
+           Est./S.E. GEOMIN ROTATED LOADINGS
+                  1             2             3
+              ________      ________      ________
+ EBB5           6.665        -0.306         8.030
+ EBB6           6.710         0.047         7.907
+ EBB8           1.419        10.794        -0.766
+ EBB9           1.833        15.177         0.696
+ EBB13         -0.939        12.565         0.055
+ EBB14          0.441        16.768         0.084
+ EBB17          1.656         1.929        14.299
+ EBB18         -1.937        10.533         0.377
+ EBB20         -1.248        11.910        -1.834
+ EBB22         -0.196        16.769        -1.254
+ EBB23          1.434        -1.044        12.115
+ EBB24          0.578        16.725        -0.139
+ EBB26          0.356         7.508        -0.736
+ EBB27         -0.464        12.085         3.315
+ EBB29         -0.680         1.020        12.700
+ EBB31          0.780        14.583        -2.406
+ EBB34         -2.359         0.695        18.437
+ EBB35         -3.889        -1.091        20.343
+ EBB36         -0.263         0.120        22.179
+ EBB38          0.439        -1.260        17.576
+
+
+           Est./S.E. GEOMIN FACTOR CORRELATIONS
+                  1             2             3
+              ________      ________      ________
+      1         0.000
+      2        -2.201         0.000
+      3         1.284       -11.466         0.000
+
+
+           Est./S.E. ESTIMATED RESIDUAL VARIANCES
+              EBB5          EBB6          EBB8          EBB9          EBB13
+              ________      ________      ________      ________      ________
+      1         3.296         4.509        17.840        14.805        12.367
+
+
+           Est./S.E. ESTIMATED RESIDUAL VARIANCES
+              EBB14         EBB17         EBB18         EBB20         EBB22
+              ________      ________      ________      ________      ________
+      1        11.759        10.621        13.025         9.232        11.227
+
+
+           Est./S.E. ESTIMATED RESIDUAL VARIANCES
+              EBB23         EBB24         EBB26         EBB27         EBB29
+              ________      ________      ________      ________      ________
+      1        11.205         9.281        18.173        11.101        14.286
+
+
+           Est./S.E. ESTIMATED RESIDUAL VARIANCES
+              EBB31         EBB34         EBB35         EBB36         EBB38
+              ________      ________      ________      ________      ________
+      1        10.287         8.607         4.512         9.198         9.373
+
+
+           FACTOR STRUCTURE
+                  1             2             3
+              ________      ________      ________
+ EBB5           0.623        -0.492         0.750
+ EBB6           0.595        -0.465         0.724
+ EBB8          -0.025         0.544        -0.297
+ EBB9           0.033         0.624        -0.282
+ EBB13         -0.348         0.754        -0.368
+ EBB14         -0.191         0.838        -0.407
+ EBB17          0.213        -0.291         0.697
+ EBB18         -0.420         0.688        -0.331
+ EBB20         -0.377         0.767        -0.446
+ EBB22         -0.258         0.790        -0.431
+ EBB23          0.227        -0.407         0.681
+ EBB24         -0.183         0.870        -0.429
+ EBB26         -0.116         0.482        -0.268
+ EBB27         -0.306         0.786        -0.253
+ EBB29          0.021        -0.222         0.574
+ EBB31         -0.140         0.770        -0.468
+ EBB34         -0.080        -0.297         0.748
+ EBB35         -0.140        -0.366         0.850
+ EBB36          0.109        -0.378         0.787
+ EBB38          0.158        -0.426         0.756
+
+
+MODIFICATION INDICES
+
+
+     MODIFICATION INDICES FOR ANALYSIS WITH 1 FACTOR(S)
+
+
+
+     MODIFICATION INDICES
+
+
+           THETA
+              EBB5          EBB6          EBB8          EBB9          EBB13
+              ________      ________      ________      ________      ________
+ EBB5           0.000
+ EBB6         199.129         0.000
+ EBB8          13.609         7.781         0.000
+ EBB9           9.654        11.654        15.438         0.000
+ EBB13          7.643         7.771         4.388         0.486         0.000
+ EBB14         24.823        19.146         2.102        20.318        34.167
+ EBB17          8.742        17.642         7.481         6.299         7.459
+ EBB18          3.247        10.341         1.915         3.075        11.542
+ EBB20          4.026         7.527         0.066         0.994         2.556
+ EBB22          8.228         6.723         1.023         0.833         1.756
+ EBB23          8.002         7.353         0.476        14.990         7.591
+ EBB24         25.639        20.419         0.275        18.605         2.169
+ EBB26          2.388         1.456        16.490         0.070         0.287
+ EBB27         26.137        24.730         0.583         0.234        23.558
+ EBB29          0.884         1.774         0.090         2.841         5.500
+ EBB31          7.352        12.036         2.650        10.364         0.506
+ EBB34          0.264         0.431         6.401        16.663        14.187
+ EBB35          0.009         0.006         2.430         9.508        17.111
+ EBB36          7.839         0.425         3.431         9.266         9.669
+ EBB38          2.045         6.568         2.034         8.021         8.334
+
+
+           THETA
+              EBB14         EBB17         EBB18         EBB20         EBB22
+              ________      ________      ________      ________      ________
+ EBB14          0.000
+ EBB17         10.025         0.000
+ EBB18          0.440         7.370         0.000
+ EBB20          0.019        10.468        30.201         0.000
+ EBB22          1.026        10.740         1.678         3.017         0.000
+ EBB23         10.382        23.210         8.905         1.249         6.594
+ EBB24          5.332        20.170         0.971         0.515        26.646
+ EBB26          0.781         9.384         1.420         0.001         2.028
+ EBB27          7.137        24.410        19.103         5.793         2.171
+ EBB29          8.635        22.461         6.701        11.259         7.502
+ EBB31          3.537         8.319         0.271         1.480         8.438
+ EBB34         13.336        18.507        10.805         4.854        11.074
+ EBB35         26.640         7.524        24.000         7.068        18.613
+ EBB36         25.547        31.415         9.411         7.131        12.321
+ EBB38         15.037        26.506         3.471         4.229        11.776
+
+
+           THETA
+              EBB23         EBB24         EBB26         EBB27         EBB29
+              ________      ________      ________      ________      ________
+ EBB23          0.000
+ EBB24          5.873         0.000
+ EBB26          0.496         0.059         0.000
+ EBB27         11.653        11.431         7.798         0.000
+ EBB29          6.030        13.921         0.300         5.769         0.000
+ EBB31          0.847        10.368         0.173         0.090         6.993
+ EBB34          3.579        22.825         1.220        24.990        17.797
+ EBB35         11.115        27.823         1.589        30.871        12.942
+ EBB36         20.819        18.890         3.343        28.224        33.546
+ EBB38          3.076        14.083         0.714        17.453        10.316
+
+
+           THETA
+              EBB31         EBB34         EBB35         EBB36         EBB38
+              ________      ________      ________      ________      ________
+ EBB31          0.000
+ EBB34         16.247         0.000
+ EBB35          3.683       162.960         0.000
+ EBB36         11.006        20.815        60.379         0.000
+ EBB38          2.331        20.984        28.789        18.553         0.000
+
+
+     EXPECTED PARAMETER CHANGE
+
+
+           THETA
+              EBB5          EBB6          EBB8          EBB9          EBB13
+              ________      ________      ________      ________      ________
+ EBB5           0.000
+ EBB6           0.431         0.000
+ EBB8           0.202         0.150         0.000
+ EBB9           0.175         0.192         0.148         0.000
+ EBB13          0.139         0.147         0.086        -0.027         0.000
+ EBB14          0.264         0.237         0.056         0.139         0.165
+ EBB17          0.141         0.193         0.137         0.134         0.144
+ EBB18          0.085         0.156         0.057        -0.071         0.113
+ EBB20          0.103         0.142        -0.012        -0.043         0.061
+ EBB22          0.143         0.130        -0.046         0.036        -0.052
+ EBB23          0.131         0.126         0.036         0.229         0.155
+ EBB24          0.263         0.237         0.021         0.144        -0.054
+ EBB26          0.092         0.070         0.193         0.014         0.027
+ EBB27          0.286         0.283         0.034         0.020         0.164
+ EBB29          0.054         0.075         0.015         0.089         0.129
+ EBB31          0.135         0.180         0.070         0.119        -0.030
+ EBB34          0.027        -0.036         0.134         0.228         0.213
+ EBB35         -0.005         0.004         0.081         0.171         0.226
+ EBB36          0.125         0.032         0.092         0.160         0.166
+ EBB38          0.070         0.119         0.080         0.162         0.164
+
+
+           THETA
+              EBB14         EBB17         EBB18         EBB20         EBB22
+              ________      ________      ________      ________      ________
+ EBB14          0.000
+ EBB17          0.164         0.000
+ EBB18         -0.022         0.129         0.000
+ EBB20          0.005         0.177         0.181         0.000
+ EBB22          0.030         0.175         0.045         0.063         0.000
+ EBB23          0.178         0.224         0.155         0.052         0.141
+ EBB24          0.062         0.233         0.032         0.025         0.136
+ EBB26         -0.043         0.183         0.059        -0.002         0.067
+ EBB27          0.088         0.282         0.145         0.089         0.052
+ EBB29          0.157         0.226         0.140         0.209         0.157
+ EBB31          0.058         0.148        -0.021         0.047         0.095
+ EBB34          0.193         0.200         0.174         0.119         0.182
+ EBB35          0.274         0.135         0.272         0.137         0.228
+ EBB36          0.268         0.234         0.147         0.150         0.180
+ EBB38          0.211         0.235         0.095         0.115         0.182
+
+
+           THETA
+              EBB23         EBB24         EBB26         EBB27         EBB29
+              ________      ________      ________      ________      ________
+ EBB23          0.000
+ EBB24          0.127         0.000
+ EBB26          0.042         0.012         0.000
+ EBB27          0.189         0.112         0.132         0.000
+ EBB29          0.135         0.211         0.035         0.135         0.000
+ EBB31          0.047         0.098         0.021        -0.012         0.154
+ EBB34          0.099         0.259         0.061         0.290         0.212
+ EBB35          0.158         0.277         0.071         0.316         0.186
+ EBB36          0.205         0.213         0.106         0.298         0.258
+ EBB38          0.089         0.197         0.050         0.244         0.173
+
+
+           THETA
+              EBB31         EBB34         EBB35         EBB36         EBB38
+              ________      ________      ________      ________      ________
+ EBB31          0.000
+ EBB34          0.229         0.000
+ EBB35          0.096         0.439         0.000
+ EBB36          0.173         0.201         0.298         0.000
+ EBB38          0.081         0.210         0.227         0.188         0.000
+
+
+     MODIFICATION INDICES FOR ANALYSIS WITH 2 FACTOR(S)
+
+
+
+     MODIFICATION INDICES
+
+
+           THETA
+              EBB5          EBB6          EBB8          EBB9          EBB13
+              ________      ________      ________      ________      ________
+ EBB5           0.000
+ EBB6         131.627         0.000
+ EBB8           7.060         1.713         0.000
+ EBB9           0.158         0.528        11.314         0.000
+ EBB13          0.420         0.241         1.073         9.063         0.000
+ EBB14          1.939         0.368         0.000         9.325        22.233
+ EBB17          1.387         0.142         0.687         0.868         0.570
+ EBB18          2.407         0.198         0.044        17.143         4.630
+ EBB20          0.142         0.315         2.838         7.999         0.077
+ EBB22          0.151         0.760         7.612         0.361        12.008
+ EBB23          0.065         0.088         0.936         5.667         0.556
+ EBB24          1.779         0.247         1.565         8.174        18.651
+ EBB26          0.187         0.023        17.679         0.493         0.230
+ EBB27          0.832         0.570         1.414         5.582         8.161
+ EBB29          5.524         3.426         3.538         1.544         0.041
+ EBB31          0.080         1.879         0.374         5.819         6.359
+ EBB34         15.853        28.425         0.015         0.492         0.044
+ EBB35         27.636        25.006         2.047         0.931         0.083
+ EBB36          2.990        15.400         0.449         0.455         0.327
+ EBB38          5.152         0.804         0.096         0.038         0.050
+
+
+           THETA
+              EBB14         EBB17         EBB18         EBB20         EBB22
+              ________      ________      ________      ________      ________
+ EBB14          0.000
+ EBB17          2.468         0.000
+ EBB18          9.958         0.339         0.000
+ EBB20          2.311         1.609        25.704         0.000
+ EBB22          0.925         0.070         0.087         0.234         0.000
+ EBB23          0.102         3.603         1.733         1.262         0.311
+ EBB24          0.631         0.038         1.749         1.329        11.864
+ EBB26          5.941         5.152         0.161         1.253         0.396
+ EBB27          0.360         0.218         6.015         0.454         1.175
+ EBB29          0.297         1.743         0.333         5.628         0.396
+ EBB31          0.122         0.116         5.422         0.033         3.218
+ EBB34          3.404         0.577         0.004         1.022         0.201
+ EBB35          0.000         8.132         5.049         0.596         0.261
+ EBB36          0.531         0.317         0.194         0.076         0.003
+ EBB38          0.035         2.627         0.957         0.004         0.638
+
+
+           THETA
+              EBB23         EBB24         EBB26         EBB27         EBB29
+              ________      ________      ________      ________      ________
+ EBB23          0.000
+ EBB24          1.186         0.000
+ EBB26          0.079         1.037         0.000
+ EBB27          0.082         0.000         4.158         0.000
+ EBB29          0.000         0.589         0.407         3.962         0.000
+ EBB31          1.483         2.817         0.353         7.203         1.265
+ EBB34          2.663         0.033         1.095         0.162         0.373
+ EBB35          0.200         0.004         0.744         0.021         0.140
+ EBB36          1.974         1.135         0.138         0.111         5.470
+ EBB38          1.570         0.078         0.250         0.009         0.250
+
+
+           THETA
+              EBB31         EBB34         EBB35         EBB36         EBB38
+              ________      ________      ________      ________      ________
+ EBB31          0.000
+ EBB34          2.422         0.000
+ EBB35          4.968        56.864         0.000
+ EBB36          0.413         0.610         3.808         0.000
+ EBB38          1.043         0.505         0.700         0.065         0.000
+
+
+     EXPECTED PARAMETER CHANGE
+
+
+           THETA
+              EBB5          EBB6          EBB8          EBB9          EBB13
+              ________      ________      ________      ________      ________
+ EBB5           0.000
+ EBB6           0.325         0.000
+ EBB8           0.118         0.057         0.000
+ EBB9           0.018         0.033         0.101         0.000
+ EBB13         -0.027        -0.021         0.034        -0.093         0.000
+ EBB14          0.061         0.027         0.001         0.077         0.109
+ EBB17         -0.047         0.015         0.034        -0.041        -0.033
+ EBB18         -0.061         0.018         0.007        -0.132         0.057
+ EBB20         -0.016         0.024        -0.063        -0.096         0.008
+ EBB22         -0.016        -0.036        -0.098        -0.019        -0.107
+ EBB23         -0.010        -0.011        -0.040         0.114         0.034
+ EBB24          0.058         0.022        -0.041         0.077        -0.126
+ EBB26          0.021        -0.007         0.156        -0.030        -0.019
+ EBB27          0.043         0.036        -0.042        -0.081         0.080
+ EBB29         -0.109        -0.084        -0.077        -0.054        -0.009
+ EBB31          0.012         0.059         0.021         0.071        -0.082
+ EBB34         -0.174        -0.240         0.005         0.033         0.010
+ EBB35         -0.226        -0.213        -0.062        -0.045         0.013
+ EBB36         -0.065        -0.160        -0.028        -0.030        -0.025
+ EBB38         -0.091        -0.034        -0.014         0.009         0.010
+
+
+           THETA
+              EBB14         EBB17         EBB18         EBB20         EBB22
+              ________      ________      ________      ________      ________
+ EBB14          0.000
+ EBB17         -0.068         0.000
+ EBB18         -0.084        -0.023         0.000
+ EBB20         -0.044         0.057         0.133         0.000
+ EBB22         -0.023         0.012        -0.008         0.014         0.000
+ EBB23          0.014         0.073         0.055        -0.043         0.025
+ EBB24         -0.018         0.008        -0.035        -0.032         0.075
+ EBB26         -0.093         0.110         0.016        -0.047         0.023
+ EBB27         -0.017         0.022         0.067         0.020        -0.031
+ EBB29         -0.024         0.053         0.025         0.118         0.029
+ EBB31          0.009         0.014        -0.073        -0.005         0.046
+ EBB34         -0.083        -0.030        -0.003        -0.045        -0.020
+ EBB35          0.000        -0.120         0.103        -0.034         0.023
+ EBB36          0.032         0.020        -0.018         0.013        -0.002
+ EBB38          0.008         0.062        -0.041         0.003         0.035
+
+
+           THETA
+              EBB23         EBB24         EBB26         EBB27         EBB29
+              ________      ________      ________      ________      ________
+ EBB23          0.000
+ EBB24         -0.047         0.000
+ EBB26         -0.013        -0.040         0.000
+ EBB27         -0.013        -0.001         0.078         0.000
+ EBB29          0.001         0.036        -0.032        -0.093         0.000
+ EBB31         -0.051         0.041        -0.024        -0.087         0.053
+ EBB34         -0.070        -0.008        -0.048        -0.020         0.026
+ EBB35         -0.018        -0.003        -0.040        -0.007        -0.016
+ EBB36          0.053        -0.045         0.018         0.016         0.089
+ EBB38         -0.051        -0.012        -0.024         0.005         0.022
+
+
+           THETA
+              EBB31         EBB34         EBB35         EBB36         EBB38
+              ________      ________      ________      ________      ________
+ EBB31          0.000
+ EBB34          0.073         0.000
+ EBB35         -0.094         0.253         0.000
+ EBB36          0.028        -0.030         0.068         0.000
+ EBB38         -0.044         0.028         0.031         0.009         0.000
+
+
+     MODIFICATION INDICES FOR ANALYSIS WITH 3 FACTOR(S)
+
+
+
+     MODIFICATION INDICES
+
+
+           THETA
+              EBB5          EBB6          EBB8          EBB9          EBB13
+              ________      ________      ________      ________      ________
+ EBB5           0.000
+ EBB6          28.938         0.000
+ EBB8           0.822         0.537         0.000
+ EBB9           9.600         6.208         5.377         0.000
+ EBB13          0.415         0.382         3.281         5.156         0.000
+ EBB14          0.058         0.376         0.260         6.296        33.632
+ EBB17          3.431         0.219         0.409         2.138         0.457
+ EBB18          1.636        12.018         2.264         8.026         1.040
+ EBB20          1.363         4.410         1.406         4.006         0.181
+ EBB22          0.578         1.860         8.823         0.381        14.616
+ EBB23          0.146         0.040         1.521         5.442         0.797
+ EBB24          0.026         1.210         4.049         4.464        17.871
+ EBB26          0.034         0.833        19.092         1.144         0.167
+ EBB27          3.803         2.778         0.726         3.690         6.670
+ EBB29          0.904         0.054         2.237         0.350         0.360
+ EBB31          3.482         0.136         0.000         2.391         4.896
+ EBB34          0.011         3.502         2.238         7.750         0.332
+ EBB35          0.003         0.095         0.090         2.744         0.849
+ EBB36          0.240         5.919         0.048         0.004         0.832
+ EBB38          1.837         0.433         0.007         0.287         0.012
+
+
+           THETA
+              EBB14         EBB17         EBB18         EBB20         EBB22
+              ________      ________      ________      ________      ________
+ EBB14          0.000
+ EBB17          3.277         0.000
+ EBB18          7.825         0.168         0.000
+ EBB20          1.371         2.501        19.389         0.000
+ EBB22          0.998         0.104         0.213         0.235         0.000
+ EBB23          0.067         2.666         2.506         1.010         0.396
+ EBB24          2.229         0.006         0.192         0.380        14.202
+ EBB26          7.460         5.619         0.465         1.142         0.426
+ EBB27          0.073         0.290         3.065         0.060         1.377
+ EBB29          0.080         1.973         0.023         4.969         0.510
+ EBB31          0.010         0.090         2.502         0.262         3.965
+ EBB34          1.475         0.037         3.641         4.491         0.145
+ EBB35          1.209         8.790         0.065         5.952         0.541
+ EBB36          1.187         0.176         1.574         0.001         0.002
+ EBB38          0.150         2.196         2.145         0.002         0.898
+
+
+           THETA
+              EBB23         EBB24         EBB26         EBB27         EBB29
+              ________      ________      ________      ________      ________
+ EBB23          0.000
+ EBB24          1.593         0.000
+ EBB26          0.115         1.544         0.000
+ EBB27          0.080         0.211         5.176         0.000
+ EBB29          0.001         1.427         0.320         5.801         0.000
+ EBB31          1.827         1.381         0.632         5.966         2.841
+ EBB34          2.014         0.637         0.632         0.767         0.010
+ EBB35          0.073         1.812         0.239         0.911         4.112
+ EBB36          1.789         0.498         0.284         0.028         3.869
+ EBB38          2.433         0.002         0.202         0.000         0.047
+
+
+           THETA
+              EBB31         EBB34         EBB35         EBB36         EBB38
+              ________      ________      ________      ________      ________
+ EBB31          0.000
+ EBB34          8.061         0.000
+ EBB35          0.589        19.469         0.000
+ EBB36          1.530         2.751         0.047         0.000
+ EBB38          0.563         0.231         0.023         0.054         0.000
+
+
+     EXPECTED PARAMETER CHANGE
+
+
+           THETA
+              EBB5          EBB6          EBB8          EBB9          EBB13
+              ________      ________      ________      ________      ________
+ EBB5           0.000
+ EBB6           0.385         0.000
+ EBB8           0.044        -0.035         0.000
+ EBB9          -0.166        -0.130         0.074         0.000
+ EBB13          0.029         0.028         0.058        -0.071         0.000
+ EBB14          0.011        -0.028        -0.015         0.067         0.131
+ EBB17         -0.087         0.021         0.025        -0.064        -0.028
+ EBB18          0.059         0.159         0.050        -0.095         0.029
+ EBB20          0.054         0.097        -0.043        -0.068        -0.013
+ EBB22         -0.033        -0.059        -0.101        -0.019        -0.113
+ EBB23         -0.017        -0.009        -0.049         0.108         0.039
+ EBB24         -0.007        -0.050        -0.064         0.061        -0.118
+ EBB26         -0.010        -0.045         0.157        -0.045        -0.016
+ EBB27          0.097         0.082        -0.029        -0.066         0.071
+ EBB29         -0.048        -0.011        -0.059        -0.025        -0.026
+ EBB31         -0.083        -0.017         0.000         0.047        -0.070
+ EBB34          0.005        -0.095         0.065         0.133        -0.027
+ EBB35         -0.003         0.016         0.014         0.084        -0.044
+ EBB36          0.021        -0.107        -0.009        -0.003        -0.039
+ EBB38         -0.061         0.028        -0.004         0.024         0.005
+
+
+           THETA
+              EBB14         EBB17         EBB18         EBB20         EBB22
+              ________      ________      ________      ________      ________
+ EBB14          0.000
+ EBB17         -0.075         0.000
+ EBB18         -0.075        -0.016         0.000
+ EBB20         -0.033         0.068         0.123         0.000
+ EBB22         -0.023         0.013        -0.013         0.013         0.000
+ EBB23          0.011         0.060         0.064        -0.037         0.026
+ EBB24         -0.033         0.003        -0.012        -0.017         0.079
+ EBB26         -0.099         0.109         0.026        -0.043         0.023
+ EBB27         -0.007         0.025         0.050         0.007        -0.032
+ EBB29         -0.012         0.054        -0.006         0.106         0.031
+ EBB31         -0.002         0.012        -0.050         0.015         0.049
+ EBB34         -0.053        -0.008        -0.086        -0.094        -0.017
+ EBB35          0.051        -0.131         0.013        -0.112         0.034
+ EBB36          0.046         0.015        -0.049         0.002         0.002
+ EBB38          0.017         0.054        -0.060        -0.002         0.039
+
+
+           THETA
+              EBB23         EBB24         EBB26         EBB27         EBB29
+              ________      ________      ________      ________      ________
+ EBB23          0.000
+ EBB24         -0.052         0.000
+ EBB26         -0.015        -0.047         0.000
+ EBB27         -0.012         0.012         0.083         0.000
+ EBB29         -0.001         0.053        -0.027        -0.108         0.000
+ EBB31         -0.054         0.029        -0.030        -0.076         0.076
+ EBB34         -0.060         0.036        -0.036        -0.042        -0.004
+ EBB35         -0.012         0.062        -0.024        -0.048        -0.097
+ EBB36          0.048        -0.028         0.024         0.008         0.072
+ EBB38         -0.061        -0.002        -0.020         0.000         0.009
+
+
+           THETA
+              EBB31         EBB34         EBB35         EBB36         EBB38
+              ________      ________      ________      ________      ________
+ EBB31          0.000
+ EBB34          0.131         0.000
+ EBB35         -0.035         0.220         0.000
+ EBB36          0.051        -0.066         0.009         0.000
+ EBB38         -0.031         0.019        -0.006        -0.008         0.000
+
+
+DIAGRAM INFORMATION
+
+  Mplus diagrams are currently not available for EFA.
+  No diagram output was produced.
+
+
+     Beginning Time:  15:10:14
+        Ending Time:  15:10:18
+       Elapsed Time:  00:00:04
+
+
+
+MUTHEN & MUTHEN
+3463 Stoner Ave.
+Los Angeles, CA  90066
+
+Tel: (310) 391-9971
+Fax: (310) 391-8971
+Web: www.StatModel.com
+Support: Support@StatModel.com
+
+Copyright (c) 1998-2013 Muthen & Muthen

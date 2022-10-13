@@ -1,0 +1,1290 @@
+Mplus VERSION 7.11
+MUTHEN & MUTHEN
+06/01/2022   4:47 PM
+
+INPUT INSTRUCTIONS
+
+  TITLE: Your title goes here
+  DATA: FILE = "EBB.dat";
+  VARIABLE:
+  NAMES = ID Hospital Idade Sexo Ecivil Nfilhos Formacao Tempoformacao Tempotrabalho
+       Tempofuncao Cargahoraria Turno Outraatividade EVENT1 EVENT2 EVENT3 EVENT4
+       EVENT5 EVENT6 EVENT7 EVENT8 EVENT9 EVENT10 EVENT11 EVENT12 EVENT13 EVENT14
+       EVENT15 EVENT16 EVENT17 EVENT18 EVENT19 EVENT20 EVENT21 EVENT22 EVENT23 EVENT24
+       EVENT25 EVENT26 EVENT27 EVENT28 EVENT29 EVENT30 EVENT31 EVENT32 EVENT33 EVENT34
+       EVENT35 EVENT36 EVENT37 EVENT38 EVENT39 EVENT40 ESUL1 ESUL2 ESUL3 ESUL4 ESUL5
+       ESUL6 ESUL7 ESUL8 ESUL9 ESUL10 ESUL11 ESUL12 ESUL13 ESUL14 ESUL15 ESUL16 ESUL17
+       ESUL18 ESUL19 ESUL20 ESUL21 EBADEP1 EBADEP2 EBADEP3 EBADEP4 EBADEP5 EBADEP6
+       EBADEP7 EBADEP8 EBADEP9 EBADEP10 EBADEP11 EBADEP12 EBADEP13 EBADEP14 EBADEP15
+       EBADEP16 EBADEP17 EBADEP18 EBADEP19 EBADEP20 EBADEP21 EBADEP22 EBADEP23
+       EBADEP24 EBADEP25 EBADEP26 EBADEP27 EBADEP28 EBADEP29 EBADEP30 EBADEP31
+       EBADEP32 EBADEP33 EBADEP34 EBADEP35 EBADEP36 EBADEP37 EBADEP38 EBADEP39
+       EBADEP40 EBADEP41 EBADEP42 EBADEP43 EBADEP44 EBADEP45 ECOGA1 ECOGA2 ECOGA3
+       ECOGA4 ECOGA5 ECOGA6 ECOGA7 ECOGA8 ECOGA9 ECOGA10 ECOGA11 ECOGA12 ECOGA13
+       ECOGA14 ECOGA15 ECOGA16 ECOGA17 ECOGA18 ECOGA19 ECOGA20 ECOGA21 ECOGA22 ECOGA23
+       ECOGA24 ECOGA25 ECOGA26 ECOGA27 ECOGA28 ECOGA29 ECOGA30 ECOGA31 ECOGA32 ECOGA33
+       ECOGA34 ECOGA35 ECOGA36 ECOGA37 ECOGA38 ECOGA39 ECOGA40 EBB1 EBB2 EBB3 EBB4
+       EBB5 EBB6 EBB7 EBB8 EBB9 EBB10 EBB11 EBB12 EBB13 EBB14 EBB15 EBB16 EBB17 EBB18
+       EBB19 EBB20 EBB21 EBB22 EBB23 EBB24 EBB25 EBB26 EBB27 EBB28 EBB29 EBB30 EBB31
+       EBB32 EBB33 EBB34 EBB35 EBB36 EBB37 EBB38 EVENTTot ESULF1 ESULF2 ESULTot
+       EBADEPTot ECOGAF1 ECOGAF2 ECOGAF3 ECOGAF4 ECOGATot EBBF1 EBBF2 EBBTot
+       IdadeClass FormacaoClass TempoTrabClass TempoFuncaoClass EVENTF1 EVENTF2
+       EVENTF3 EVENT1Class EVENT2Class EVENTF3Class ESULF1Class ESULF2Class
+       EBADEPClass ECOGAF1Class ECOGAF2Class ECOGAF3Classi ECOGAF4Class EBBF1Class
+       EBBF2Class;
+  MISSING=.;
+  IDVARIABLE = ID;
+  USEVARIABLE =
+  EBADEP1 EBADEP2 EBADEP4 EBADEP5 EBADEP10 EBADEP18
+  EBADEP23 EBADEP24 EBADEP28 EBADEP29 EBADEP31 EBADEP38
+  EBADEP40 EBADEP43 EBADEP45
+  !EBB5 EBB6 EBB8 EBB9 EBB13 EBB14 EBB17 EBB18
+  !EBB20 EBB22 EBB23 EBB24 EBB26 EBB27 EBB29 EBB31
+  !EBB34 EBB35 EBB36 EBB38
+
+  !EBADEPTot
+  !EBBF1 EBBF2
+  !EVENTTot
+  !EXHAUST
+  ;
+  !CLASSES = c(4);
+  !DEFINE:
+  !EXHAUST = ((4-EBB5)+(4-EBB6)+EBB8+EBB9+EBB13+EBB14+(4-EBB17)+EBB18+
+  !EBB20+EBB22+(4-EBB23)+EBB24+EBB26+EBB27+(4-EBB29)+EBB31+
+  !EBB34+(4-EBB35)+(4-EBB36)+(4-EBB38))/20;
+
+  !STANDARDIZE EBADEPTot EXHAUST;
+  CATEGORICAL = ALL;
+  ANALYSIS:
+  TYPE=EFA 1 3;
+  !ROTATION=BI-GEOMIN(OBLIQUE);
+  !TYPE = MIXTURE;
+  !ESTIMATOR IS MLR;
+  !STARTS = 100 10;!COMEÇAR TESTANDO COM MENOS, TIPO 100 10. O VALOR ALTO É PARA AS SOLUÇÕES
+  !LRTSTARTS = 0 0 100 10
+  !OPTSEED = 136842;
+  !ALGORITHM=INTEGRATION;
+  !PROCESS = 3 (STARTS);
+  !ITERATIONS = 10000;
+  !CONVERGENCE = 0.001;
+
+  MODEL:
+  !dep by EBADEP1 EBADEP2 EBADEP4 EBADEP5 EBADEP10 EBADEP18
+  !EBADEP23 EBADEP24 EBADEP28 EBADEP29 EBADEP31 EBADEP38
+  !EBADEP40 EBADEP43 EBADEP45;
+  !burn by EBB5@-.79 EBB6 EBB8 EBB9 EBB13 EBB14 EBB17 EBB18
+  !EBB20 EBB22 EBB23 EBB24 EBB26 EBB27 EBB29 EBB31
+  !EBB34 EBB35 EBB36 EBB38;
+
+  !F1-F3 by EBADEP1 EBADEP2 EBADEP4 EBADEP5 EBADEP10 EBADEP18
+  !EBADEP23 EBADEP24 EBADEP28 EBADEP29 EBADEP31 EBADEP38
+  !EBADEP40 EBADEP43 EBADEP45
+  !EBB5 EBB6 EBB8 EBB9 EBB13 EBB14 EBB17 EBB18
+  !EBB20 EBB22 EBB23 EBB24 EBB26 EBB27 EBB29 EBB31
+  !EBB34 EBB35 EBB36 EBB38 (*1);
+
+  !FG by EBADEP1* EBADEP2 EBADEP4 EBADEP5 EBADEP10 EBADEP18
+  !EBADEP23 EBADEP24 EBADEP28 EBADEP29 EBADEP31 EBADEP38
+  !EBADEP40 EBADEP43 EBADEP45
+  !EBB5 EBB6 EBB8 EBB9 EBB13 EBB14 EBB17 EBB18
+  !EBB20 EBB22 EBB23 EBB24 EBB26 EBB27 EBB29 EBB31
+  !EBB34 EBB35 EBB36 EBB38;
+  !FG@1;
+
+  !F1-F3 by EBADEP1 EBADEP2 EBADEP4 EBADEP5 EBADEP10 EBADEP18
+  !EBADEP23 EBADEP24 EBADEP28 EBADEP29 EBADEP31 EBADEP38
+  !EBADEP40 EBADEP43 EBADEP45 (*1);
+
+
+  !BURN by EBB5* EBB6 EBB8 EBB9 EBB13 EBB14 EBB17 EBB18
+  !EBB20 EBB22 EBB23 EBB24 EBB26 EBB27 EBB29 EBB31
+  !EBB34 EBB35 EBB36 EBB38;
+  !BURN@1;
+  !FG with DEP@0 BURN@0;
+
+
+
+  !F1 by EBB8* EBB9 EBB13 EBB14  EBB18
+  !EBB20 EBB22 EBB23 EBB24 EBB26 EBB27 EBB29 EBB31
+  !EBB34 EBB35 EBB36 EBB38;
+  !F1@1;
+
+  !F2 by EBB5* EBB6 EBB17 EBB23 EBB29 EBB34 EBB35 EBB36 EBB38;
+  !F2@1;
+
+  !acq by EBB5@1 EBB6@1 EBB8@1 EBB9@1 EBB13@1 EBB14@1 EBB17@1 EBB18@1
+  !EBB20@1 EBB22@1 EBB23@1 EBB24@1 EBB26@1 EBB27@1 EBB29@1 EBB31@1
+  !EBB34@1 EBB35@1 EBB36@1 EBB38@1;
+  !acq@.109;
+  !acq with F1@0 F2@0;
+
+
+
+  !acq by EBADEP1@1 EBADEP2@1 EBADEP4@1 EBADEP5@1 EBADEP10@1 EBADEP18@1
+  !EBADEP23@1 EBADEP24@1 EBADEP28@1 EBADEP29@1 EBADEP31@1 EBADEP38@1
+  !EBADEP40@1 EBADEP43@1 EBADEP45@1
+  !EBB5@1 EBB6@1 EBB8@1 EBB9@1 EBB13@1 EBB14@1 EBB17@1 EBB18@1
+  !EBB20@1 EBB22@1 EBB23@1 EBB24@1 EBB26@1 EBB27@1 EBB29@1 EBB31@1
+  !EBB34@1 EBB35@1 EBB36@1 EBB38@1;
+  !acq@.103;
+  !acq with F1@0 F2@0 F3@0;
+  !acq with FG@0 DEP@0 BURN@0;
+
+
+  MODEL:
+  !%OVERALL%
+  !c ON EVENTTot;
+
+
+  Output: standardized modindices;
+  !OUTPUT: tech11 tech14;
+
+  !PLOT:
+  !type is plot3;
+  !series is EBADEPTot (1) EXHAUST (2);
+
+  !SAVEDATA:
+  !file is 4 classes.txt;
+  !save is cprob;
+  !format is free;
+
+
+
+*** WARNING in OUTPUT command
+  STANDARDIZED (STD, STDY, STDYX) options are not available for TYPE=EFA.
+  Request for STANDARDIZED options will be ignored.  Note that STANDARDIZED options
+  are available with the use of EFA factors (ESEM) declared in the MODEL command.
+*** WARNING
+  Data set contains cases with missing on all variables.
+  These cases were not included in the analysis.
+  Number of cases with missing on all variables:  7
+   2 WARNING(S) FOUND IN THE INPUT INSTRUCTIONS
+
+
+
+Your title goes here
+
+SUMMARY OF ANALYSIS
+
+Number of groups                                                 1
+Number of observations                                         577
+
+Number of dependent variables                                   15
+Number of independent variables                                  0
+Number of continuous latent variables                            0
+
+Observed dependent variables
+
+  Binary and ordered categorical (ordinal)
+   EBADEP1     EBADEP2     EBADEP4     EBADEP5     EBADEP10    EBADEP18
+   EBADEP23    EBADEP24    EBADEP28    EBADEP29    EBADEP31    EBADEP38
+   EBADEP40    EBADEP43    EBADEP45
+
+Variables with special functions
+
+  ID variable           ID
+
+Estimator                                                    WLSMV
+Rotation                                                    GEOMIN
+Row standardization                                    CORRELATION
+Type of rotation                                           OBLIQUE
+Epsilon value                                               Varies
+Maximum number of iterations                                  1000
+Convergence criterion                                    0.500D-04
+Maximum number of steepest descent iterations                   20
+Maximum number of iterations for H1                           2000
+Convergence criterion for H1                             0.100D-03
+Optimization Specifications for the Exploratory Factor Analysis
+Rotation Algorithm
+  Number of random starts                                       30
+  Maximum number of iterations                               10000
+  Derivative convergence criterion                       0.100D-04
+
+Input data file(s)
+  EBB.dat
+
+Input data format  FREE
+
+
+SUMMARY OF DATA
+
+     Number of missing data patterns            21
+
+
+COVARIANCE COVERAGE OF DATA
+
+Minimum covariance coverage value   0.100
+
+
+     PROPORTION OF DATA PRESENT
+
+
+           Covariance Coverage
+              EBADEP1       EBADEP2       EBADEP4       EBADEP5       EBADEP10
+              ________      ________      ________      ________      ________
+ EBADEP1        0.995
+ EBADEP2        0.993         0.998
+ EBADEP4        0.990         0.993         0.995
+ EBADEP5        0.991         0.993         0.990         0.995
+ EBADEP10       0.990         0.995         0.990         0.990         0.995
+ EBADEP18       0.990         0.993         0.990         0.990         0.990
+ EBADEP23       0.993         0.997         0.993         0.993         0.993
+ EBADEP24       0.991         0.995         0.991         0.991         0.991
+ EBADEP28       0.983         0.986         0.983         0.983         0.984
+ EBADEP29       0.990         0.993         0.990         0.990         0.990
+ EBADEP31       0.986         0.990         0.986         0.986         0.986
+ EBADEP38       0.988         0.991         0.990         0.988         0.988
+ EBADEP40       0.984         0.988         0.984         0.984         0.984
+ EBADEP43       0.983         0.986         0.983         0.983         0.984
+ EBADEP45       0.993         0.997         0.993         0.993         0.993
+
+
+           Covariance Coverage
+              EBADEP18      EBADEP23      EBADEP24      EBADEP28      EBADEP29
+              ________      ________      ________      ________      ________
+ EBADEP18       0.995
+ EBADEP23       0.993         0.998
+ EBADEP24       0.991         0.995         0.997
+ EBADEP28       0.983         0.986         0.984         0.988
+ EBADEP29       0.991         0.993         0.991         0.983         0.995
+ EBADEP31       0.986         0.990         0.988         0.979         0.986
+ EBADEP38       0.988         0.991         0.990         0.981         0.988
+ EBADEP40       0.984         0.988         0.986         0.977         0.984
+ EBADEP43       0.983         0.986         0.984         0.977         0.983
+ EBADEP45       0.993         0.997         0.995         0.986         0.993
+
+
+           Covariance Coverage
+              EBADEP31      EBADEP38      EBADEP40      EBADEP43      EBADEP45
+              ________      ________      ________      ________      ________
+ EBADEP31       0.991
+ EBADEP38       0.984         0.993
+ EBADEP40       0.981         0.983         0.990
+ EBADEP43       0.979         0.981         0.979         0.988
+ EBADEP45       0.990         0.991         0.988         0.986         0.998
+
+
+UNIVARIATE PROPORTIONS AND COUNTS FOR CATEGORICAL VARIABLES
+
+    EBADEP1
+      Category 1    0.362      208.000
+      Category 2    0.253      145.000
+      Category 3    0.213      122.000
+      Category 4    0.172       99.000
+    EBADEP2
+      Category 1    0.314      181.000
+      Category 2    0.333      192.000
+      Category 3    0.226      130.000
+      Category 4    0.127       73.000
+    EBADEP4
+      Category 1    0.598      343.000
+      Category 2    0.274      157.000
+      Category 3    0.082       47.000
+      Category 4    0.047       27.000
+    EBADEP5
+      Category 1    0.591      339.000
+      Category 2    0.246      141.000
+      Category 3    0.115       66.000
+      Category 4    0.049       28.000
+    EBADEP10
+      Category 1    0.660      379.000
+      Category 2    0.225      129.000
+      Category 3    0.080       46.000
+      Category 4    0.035       20.000
+    EBADEP18
+      Category 1    0.573      329.000
+      Category 2    0.251      144.000
+      Category 3    0.103       59.000
+      Category 4    0.073       42.000
+    EBADEP23
+      Category 1    0.648      373.000
+      Category 2    0.262      151.000
+      Category 3    0.071       41.000
+      Category 4    0.019       11.000
+    EBADEP24
+      Category 1    0.663      381.000
+      Category 2    0.221      127.000
+      Category 3    0.082       47.000
+      Category 4    0.035       20.000
+    EBADEP28
+      Category 1    0.621      354.000
+      Category 2    0.293      167.000
+      Category 3    0.058       33.000
+      Category 4    0.028       16.000
+    EBADEP29
+      Category 1    0.794      456.000
+      Category 2    0.134       77.000
+      Category 3    0.035       20.000
+      Category 4    0.037       21.000
+    EBADEP31
+      Category 1    0.476      272.000
+      Category 2    0.240      137.000
+      Category 3    0.143       82.000
+      Category 4    0.142       81.000
+    EBADEP38
+      Category 1    0.414      237.000
+      Category 2    0.293      168.000
+      Category 3    0.155       89.000
+      Category 4    0.138       79.000
+    EBADEP40
+      Category 1    0.452      258.000
+      Category 2    0.310      177.000
+      Category 3    0.135       77.000
+      Category 4    0.103       59.000
+    EBADEP43
+      Category 1    0.481      274.000
+      Category 2    0.358      204.000
+      Category 3    0.095       54.000
+      Category 4    0.067       38.000
+    EBADEP45
+      Category 1    0.363      209.000
+      Category 2    0.417      240.000
+      Category 3    0.116       67.000
+      Category 4    0.104       60.000
+
+
+
+SUMMARY OF MODEL FIT INFORMATION
+
+
+                   Number of                   Degrees of
+     Model        Parameters      Chi-Square    Freedom     P-Value
+
+     1-factor          15            631.391        90       0.0000
+     2-factor          29            443.145        76       0.0000
+     3-factor          42            227.213        63       0.0000
+
+                                               Degrees of
+     Models Compared              Chi-Square    Freedom     P-Value
+
+     1-factor against 2-factor       176.072        14       0.0000
+     2-factor against 3-factor       173.964        13       0.0000
+
+
+
+RESULTS FOR EXPLORATORY FACTOR ANALYSIS
+
+
+           EIGENVALUES FOR SAMPLE CORRELATION MATRIX
+                  1             2             3             4             5
+              ________      ________      ________      ________      ________
+      1         8.072         1.122         0.908         0.809         0.637
+
+
+           EIGENVALUES FOR SAMPLE CORRELATION MATRIX
+                  6             7             8             9            10
+              ________      ________      ________      ________      ________
+      1         0.599         0.578         0.459         0.382         0.342
+
+
+           EIGENVALUES FOR SAMPLE CORRELATION MATRIX
+                 11            12            13            14            15
+              ________      ________      ________      ________      ________
+      1         0.306         0.263         0.221         0.156         0.144
+
+
+EXPLORATORY FACTOR ANALYSIS WITH 1 FACTOR(S):
+
+
+MODEL FIT INFORMATION
+
+Number of Free Parameters                       15
+
+Chi-Square Test of Model Fit
+
+          Value                            631.391*
+          Degrees of Freedom                    90
+          P-Value                           0.0000
+
+*   The chi-square value for MLM, MLMV, MLR, ULSMV, WLSM and WLSMV cannot be used
+    for chi-square difference testing in the regular way.  MLM, MLR and WLSM
+    chi-square difference testing is described on the Mplus website.  MLMV, WLSMV,
+    and ULSMV difference testing is done using the DIFFTEST option.
+
+RMSEA (Root Mean Square Error Of Approximation)
+
+          Estimate                           0.102
+          90 Percent C.I.                    0.095  0.110
+          Probability RMSEA <= .05           0.000
+
+CFI/TLI
+
+          CFI                                0.931
+          TLI                                0.920
+
+Chi-Square Test of Model Fit for the Baseline Model
+
+          Value                           7992.738
+          Degrees of Freedom                   105
+          P-Value                           0.0000
+
+SRMR (Standardized Root Mean Square Residual)
+
+          Value                              0.062
+
+
+
+MINIMUM ROTATION FUNCTION VALUE       7.89020
+
+
+
+           GEOMIN ROTATED LOADINGS (* significant at 5% level)
+                  1
+              ________
+ EBADEP1        0.728*
+ EBADEP2        0.772*
+ EBADEP4        0.736*
+ EBADEP5        0.707*
+ EBADEP10       0.665*
+ EBADEP18       0.820*
+ EBADEP23       0.789*
+ EBADEP24       0.828*
+ EBADEP28       0.847*
+ EBADEP29       0.751*
+ EBADEP31       0.655*
+ EBADEP38       0.824*
+ EBADEP40       0.696*
+ EBADEP43       0.237*
+ EBADEP45       0.608*
+
+
+           GEOMIN FACTOR CORRELATIONS (* significant at 5% level)
+                  1
+              ________
+      1         1.000
+
+
+           ESTIMATED RESIDUAL VARIANCES
+              EBADEP1       EBADEP2       EBADEP4       EBADEP5       EBADEP10
+              ________      ________      ________      ________      ________
+      1         0.470         0.404         0.458         0.499         0.558
+
+
+           ESTIMATED RESIDUAL VARIANCES
+              EBADEP18      EBADEP23      EBADEP24      EBADEP28      EBADEP29
+              ________      ________      ________      ________      ________
+      1         0.328         0.378         0.315         0.283         0.436
+
+
+           ESTIMATED RESIDUAL VARIANCES
+              EBADEP31      EBADEP38      EBADEP40      EBADEP43      EBADEP45
+              ________      ________      ________      ________      ________
+      1         0.570         0.322         0.515         0.944         0.631
+
+
+           S.E. GEOMIN ROTATED LOADINGS
+                  1
+              ________
+ EBADEP1        0.023
+ EBADEP2        0.022
+ EBADEP4        0.025
+ EBADEP5        0.026
+ EBADEP10       0.032
+ EBADEP18       0.019
+ EBADEP23       0.021
+ EBADEP24       0.021
+ EBADEP28       0.019
+ EBADEP29       0.032
+ EBADEP31       0.028
+ EBADEP38       0.018
+ EBADEP40       0.026
+ EBADEP43       0.045
+ EBADEP45       0.030
+
+
+           S.E. GEOMIN FACTOR CORRELATIONS
+                  1
+              ________
+      1         0.000
+
+
+           S.E. ESTIMATED RESIDUAL VARIANCES
+              EBADEP1       EBADEP2       EBADEP4       EBADEP5       EBADEP10
+              ________      ________      ________      ________      ________
+      1         0.034         0.034         0.036         0.037         0.043
+
+
+           S.E. ESTIMATED RESIDUAL VARIANCES
+              EBADEP18      EBADEP23      EBADEP24      EBADEP28      EBADEP29
+              ________      ________      ________      ________      ________
+      1         0.031         0.034         0.034         0.032         0.048
+
+
+           S.E. ESTIMATED RESIDUAL VARIANCES
+              EBADEP31      EBADEP38      EBADEP40      EBADEP43      EBADEP45
+              ________      ________      ________      ________      ________
+      1         0.037         0.029         0.036         0.021         0.037
+
+
+           Est./S.E. GEOMIN ROTATED LOADINGS
+                  1
+              ________
+ EBADEP1       31.151
+ EBADEP2       35.160
+ EBADEP4       29.969
+ EBADEP5       27.322
+ EBADEP10      20.597
+ EBADEP18      43.321
+ EBADEP23      36.853
+ EBADEP24      40.007
+ EBADEP28      45.424
+ EBADEP29      23.649
+ EBADEP31      23.413
+ EBADEP38      46.487
+ EBADEP40      27.127
+ EBADEP43       5.276
+ EBADEP45      20.186
+
+
+           Est./S.E. GEOMIN FACTOR CORRELATIONS
+                  1
+              ________
+      1         0.000
+
+
+           Est./S.E. ESTIMATED RESIDUAL VARIANCES
+              EBADEP1       EBADEP2       EBADEP4       EBADEP5       EBADEP10
+              ________      ________      ________      ________      ________
+      1        13.785        11.894        12.673        13.632        13.016
+
+
+           Est./S.E. ESTIMATED RESIDUAL VARIANCES
+              EBADEP18      EBADEP23      EBADEP24      EBADEP28      EBADEP29
+              ________      ________      ________      ________      ________
+      1        10.573        11.210         9.207         8.982         9.133
+
+
+           Est./S.E. ESTIMATED RESIDUAL VARIANCES
+              EBADEP31      EBADEP38      EBADEP40      EBADEP43      EBADEP45
+              ________      ________      ________      ________      ________
+      1        15.549        11.020        14.404        44.401        17.231
+
+
+EXPLORATORY FACTOR ANALYSIS WITH 2 FACTOR(S):
+
+
+MODEL FIT INFORMATION
+
+Number of Free Parameters                       29
+
+Chi-Square Test of Model Fit
+
+          Value                            443.145*
+          Degrees of Freedom                    76
+          P-Value                           0.0000
+
+*   The chi-square value for MLM, MLMV, MLR, ULSMV, WLSM and WLSMV cannot be used
+    for chi-square difference testing in the regular way.  MLM, MLR and WLSM
+    chi-square difference testing is described on the Mplus website.  MLMV, WLSMV,
+    and ULSMV difference testing is done using the DIFFTEST option.
+
+RMSEA (Root Mean Square Error Of Approximation)
+
+          Estimate                           0.092
+          90 Percent C.I.                    0.083  0.100
+          Probability RMSEA <= .05           0.000
+
+CFI/TLI
+
+          CFI                                0.953
+          TLI                                0.936
+
+Chi-Square Test of Model Fit for the Baseline Model
+
+          Value                           7992.738
+          Degrees of Freedom                   105
+          P-Value                           0.0000
+
+SRMR (Standardized Root Mean Square Residual)
+
+          Value                              0.049
+
+
+
+MINIMUM ROTATION FUNCTION VALUE       1.40169
+
+
+
+           GEOMIN ROTATED LOADINGS (* significant at 5% level)
+                  1             2
+              ________      ________
+ EBADEP1        0.674*        0.099
+ EBADEP2        0.669*        0.159
+ EBADEP4        0.805*       -0.051
+ EBADEP5        0.649*        0.102
+ EBADEP10       0.533*        0.187*
+ EBADEP18       0.530*        0.379*
+ EBADEP23       0.915*       -0.127
+ EBADEP24       0.863*       -0.014
+ EBADEP28       0.450*        0.507*
+ EBADEP29       0.640*        0.167*
+ EBADEP31      -0.008         0.785*
+ EBADEP38       0.503*        0.418*
+ EBADEP40       0.046         0.777*
+ EBADEP43      -0.003         0.291*
+ EBADEP45       0.463*        0.200*
+
+
+           GEOMIN FACTOR CORRELATIONS (* significant at 5% level)
+                  1             2
+              ________      ________
+      1         1.000
+      2         0.636*        1.000
+
+
+           ESTIMATED RESIDUAL VARIANCES
+              EBADEP1       EBADEP2       EBADEP4       EBADEP5       EBADEP10
+              ________      ________      ________      ________      ________
+      1         0.452         0.392         0.402         0.485         0.555
+
+
+           ESTIMATED RESIDUAL VARIANCES
+              EBADEP18      EBADEP23      EBADEP24      EBADEP28      EBADEP29
+              ________      ________      ________      ________      ________
+      1         0.320         0.295         0.271         0.250         0.427
+
+
+           ESTIMATED RESIDUAL VARIANCES
+              EBADEP31      EBADEP38      EBADEP40      EBADEP43      EBADEP45
+              ________      ________      ________      ________      ________
+      1         0.391         0.304         0.349         0.916         0.628
+
+
+           S.E. GEOMIN ROTATED LOADINGS
+                  1             2
+              ________      ________
+ EBADEP1        0.063         0.083
+ EBADEP2        0.064         0.083
+ EBADEP4        0.054         0.075
+ EBADEP5        0.062         0.079
+ EBADEP10       0.075         0.087
+ EBADEP18       0.071         0.079
+ EBADEP23       0.051         0.069
+ EBADEP24       0.028         0.028
+ EBADEP28       0.069         0.069
+ EBADEP29       0.071         0.082
+ EBADEP31       0.019         0.034
+ EBADEP38       0.063         0.064
+ EBADEP40       0.094         0.084
+ EBADEP43       0.068         0.071
+ EBADEP45       0.065         0.076
+
+
+           S.E. GEOMIN FACTOR CORRELATIONS
+                  1             2
+              ________      ________
+      1         0.000
+      2         0.057         0.000
+
+
+           S.E. ESTIMATED RESIDUAL VARIANCES
+              EBADEP1       EBADEP2       EBADEP4       EBADEP5       EBADEP10
+              ________      ________      ________      ________      ________
+      1         0.035         0.034         0.036         0.037         0.043
+
+
+           S.E. ESTIMATED RESIDUAL VARIANCES
+              EBADEP18      EBADEP23      EBADEP24      EBADEP28      EBADEP29
+              ________      ________      ________      ________      ________
+      1         0.031         0.033         0.037         0.030         0.048
+
+
+           S.E. ESTIMATED RESIDUAL VARIANCES
+              EBADEP31      EBADEP38      EBADEP40      EBADEP43      EBADEP45
+              ________      ________      ________      ________      ________
+      1         0.051         0.029         0.050         0.028         0.037
+
+
+           Est./S.E. GEOMIN ROTATED LOADINGS
+                  1             2
+              ________      ________
+ EBADEP1       10.660         1.182
+ EBADEP2       10.501         1.902
+ EBADEP4       14.883        -0.673
+ EBADEP5       10.419         1.282
+ EBADEP10       7.096         2.156
+ EBADEP18       7.474         4.826
+ EBADEP23      18.018        -1.855
+ EBADEP24      30.915        -0.503
+ EBADEP28       6.549         7.331
+ EBADEP29       9.008         2.032
+ EBADEP31      -0.425        22.784
+ EBADEP38       8.004         6.538
+ EBADEP40       0.489         9.217
+ EBADEP43      -0.049         4.073
+ EBADEP45       7.108         2.633
+
+
+           Est./S.E. GEOMIN FACTOR CORRELATIONS
+                  1             2
+              ________      ________
+      1         0.000
+      2        11.085         0.000
+
+
+           Est./S.E. ESTIMATED RESIDUAL VARIANCES
+              EBADEP1       EBADEP2       EBADEP4       EBADEP5       EBADEP10
+              ________      ________      ________      ________      ________
+      1        13.027        11.457        11.275        13.187        12.793
+
+
+           Est./S.E. ESTIMATED RESIDUAL VARIANCES
+              EBADEP18      EBADEP23      EBADEP24      EBADEP28      EBADEP29
+              ________      ________      ________      ________      ________
+      1        10.380         8.864         7.271         8.468         8.832
+
+
+           Est./S.E. ESTIMATED RESIDUAL VARIANCES
+              EBADEP31      EBADEP38      EBADEP40      EBADEP43      EBADEP45
+              ________      ________      ________      ________      ________
+      1         7.610        10.628         6.945        33.066        17.087
+
+
+           FACTOR STRUCTURE
+                  1             2
+              ________      ________
+ EBADEP1        0.737         0.527
+ EBADEP2        0.770         0.584
+ EBADEP4        0.772         0.461
+ EBADEP5        0.714         0.514
+ EBADEP10       0.652         0.526
+ EBADEP18       0.771         0.716
+ EBADEP23       0.834         0.454
+ EBADEP24       0.853         0.534
+ EBADEP28       0.772         0.793
+ EBADEP29       0.746         0.574
+ EBADEP31       0.491         0.780
+ EBADEP38       0.769         0.738
+ EBADEP40       0.540         0.806
+ EBADEP43       0.182         0.289
+ EBADEP45       0.590         0.494
+
+
+EXPLORATORY FACTOR ANALYSIS WITH 3 FACTOR(S):
+
+
+MODEL FIT INFORMATION
+
+Number of Free Parameters                       42
+
+Chi-Square Test of Model Fit
+
+          Value                            227.213*
+          Degrees of Freedom                    63
+          P-Value                           0.0000
+
+*   The chi-square value for MLM, MLMV, MLR, ULSMV, WLSM and WLSMV cannot be used
+    for chi-square difference testing in the regular way.  MLM, MLR and WLSM
+    chi-square difference testing is described on the Mplus website.  MLMV, WLSMV,
+    and ULSMV difference testing is done using the DIFFTEST option.
+
+RMSEA (Root Mean Square Error Of Approximation)
+
+          Estimate                           0.067
+          90 Percent C.I.                    0.058  0.077
+          Probability RMSEA <= .05           0.001
+
+CFI/TLI
+
+          CFI                                0.979
+          TLI                                0.965
+
+Chi-Square Test of Model Fit for the Baseline Model
+
+          Value                           7992.738
+          Degrees of Freedom                   105
+          P-Value                           0.0000
+
+SRMR (Standardized Root Mean Square Residual)
+
+          Value                              0.035
+
+
+
+MINIMUM ROTATION FUNCTION VALUE       0.63560
+
+
+
+           GEOMIN ROTATED LOADINGS (* significant at 5% level)
+                  1             2             3
+              ________      ________      ________
+ EBADEP1        0.946*       -0.046        -0.171
+ EBADEP2        0.976*        0.019        -0.213*
+ EBADEP4        0.433*       -0.021         0.447*
+ EBADEP5        0.467*        0.090         0.249*
+ EBADEP10       0.404*        0.188*        0.158
+ EBADEP18       0.580*        0.317*       -0.003
+ EBADEP23       0.017         0.165         0.772*
+ EBADEP24      -0.005         0.310*        0.689*
+ EBADEP28       0.432*        0.484*        0.022
+ EBADEP29       0.458*        0.168         0.228*
+ EBADEP31       0.012         0.820*       -0.134
+ EBADEP38       0.188*        0.545*        0.220*
+ EBADEP40      -0.214         1.003*       -0.007
+ EBADEP43      -0.075         0.337*        0.011
+ EBADEP45       0.288*        0.216*        0.193*
+
+
+           GEOMIN FACTOR CORRELATIONS (* significant at 5% level)
+                  1             2             3
+              ________      ________      ________
+      1         1.000
+      2         0.720*        1.000
+      3         0.672*        0.546*        1.000
+
+
+           ESTIMATED RESIDUAL VARIANCES
+              EBADEP1       EBADEP2       EBADEP4       EBADEP5       EBADEP10
+              ________      ________      ________      ________      ________
+      1         0.344         0.259         0.375         0.471         0.549
+
+
+           ESTIMATED RESIDUAL VARIANCES
+              EBADEP18      EBADEP23      EBADEP24      EBADEP28      EBADEP29
+              ________      ________      ________      ________      ________
+      1         0.302         0.216         0.203         0.254         0.417
+
+
+           ESTIMATED RESIDUAL VARIANCES
+              EBADEP31      EBADEP38      EBADEP40      EBADEP43      EBADEP45
+              ________      ________      ________      ________      ________
+      1         0.418         0.285         0.263         0.915         0.623
+
+
+           S.E. GEOMIN ROTATED LOADINGS
+                  1             2             3
+              ________      ________      ________
+ EBADEP1        0.082         0.071         0.100
+ EBADEP2        0.076         0.018         0.097
+ EBADEP4        0.075         0.026         0.077
+ EBADEP5        0.081         0.079         0.081
+ EBADEP10       0.089         0.087         0.081
+ EBADEP18       0.073         0.076         0.019
+ EBADEP23       0.064         0.136         0.089
+ EBADEP24       0.029         0.120         0.081
+ EBADEP28       0.076         0.072         0.049
+ EBADEP29       0.089         0.091         0.086
+ EBADEP31       0.017         0.070         0.079
+ EBADEP38       0.065         0.078         0.067
+ EBADEP40       0.110         0.093         0.010
+ EBADEP43       0.104         0.087         0.087
+ EBADEP45       0.079         0.076         0.073
+
+
+           S.E. GEOMIN FACTOR CORRELATIONS
+                  1             2             3
+              ________      ________      ________
+      1         0.000
+      2         0.047         0.000
+      3         0.070         0.108         0.000
+
+
+           S.E. ESTIMATED RESIDUAL VARIANCES
+              EBADEP1       EBADEP2       EBADEP4       EBADEP5       EBADEP10
+              ________      ________      ________      ________      ________
+      1         0.040         0.040         0.036         0.037         0.044
+
+
+           S.E. ESTIMATED RESIDUAL VARIANCES
+              EBADEP18      EBADEP23      EBADEP24      EBADEP28      EBADEP29
+              ________      ________      ________      ________      ________
+      1         0.030         0.040         0.039         0.030         0.049
+
+
+           S.E. ESTIMATED RESIDUAL VARIANCES
+              EBADEP31      EBADEP38      EBADEP40      EBADEP43      EBADEP45
+              ________      ________      ________      ________      ________
+      1         0.049         0.029         0.058         0.029         0.037
+
+
+           Est./S.E. GEOMIN ROTATED LOADINGS
+                  1             2             3
+              ________      ________      ________
+ EBADEP1       11.486        -0.646        -1.712
+ EBADEP2       12.810         1.072        -2.192
+ EBADEP4        5.806        -0.815         5.839
+ EBADEP5        5.767         1.132         3.081
+ EBADEP10       4.528         2.167         1.944
+ EBADEP18       7.977         4.172        -0.172
+ EBADEP23       0.260         1.216         8.643
+ EBADEP24      -0.185         2.578         8.518
+ EBADEP28       5.670         6.690         0.444
+ EBADEP29       5.173         1.835         2.656
+ EBADEP31       0.718        11.793        -1.696
+ EBADEP38       2.889         6.994         3.299
+ EBADEP40      -1.939        10.816        -0.685
+ EBADEP43      -0.723         3.869         0.125
+ EBADEP45       3.652         2.834         2.651
+
+
+           Est./S.E. GEOMIN FACTOR CORRELATIONS
+                  1             2             3
+              ________      ________      ________
+      1         0.000
+      2        15.398         0.000
+      3         9.538         5.040         0.000
+
+
+           Est./S.E. ESTIMATED RESIDUAL VARIANCES
+              EBADEP1       EBADEP2       EBADEP4       EBADEP5       EBADEP10
+              ________      ________      ________      ________      ________
+      1         8.609         6.401        10.364        12.616        12.463
+
+
+           Est./S.E. ESTIMATED RESIDUAL VARIANCES
+              EBADEP18      EBADEP23      EBADEP24      EBADEP28      EBADEP29
+              ________      ________      ________      ________      ________
+      1        10.107         5.467         5.150         8.450         8.500
+
+
+           Est./S.E. ESTIMATED RESIDUAL VARIANCES
+              EBADEP31      EBADEP38      EBADEP40      EBADEP43      EBADEP45
+              ________      ________      ________      ________      ________
+      1         8.482         9.660         4.541        32.041        16.838
+
+
+           FACTOR STRUCTURE
+                  1             2             3
+              ________      ________      ________
+ EBADEP1        0.799         0.543         0.440
+ EBADEP2        0.846         0.606         0.453
+ EBADEP4        0.719         0.535         0.727
+ EBADEP5        0.699         0.562         0.612
+ EBADEP10       0.645         0.565         0.532
+ EBADEP18       0.806         0.733         0.560
+ EBADEP23       0.655         0.599         0.873
+ EBADEP24       0.681         0.682         0.855
+ EBADEP28       0.795         0.807         0.576
+ EBADEP29       0.732         0.622         0.628
+ EBADEP31       0.512         0.755         0.321
+ EBADEP38       0.729         0.801         0.644
+ EBADEP40       0.504         0.845         0.396
+ EBADEP43       0.174         0.288         0.144
+ EBADEP45       0.573         0.529         0.504
+
+
+MODIFICATION INDICES
+
+
+     MODIFICATION INDICES FOR ANALYSIS WITH 1 FACTOR(S)
+
+
+
+     MODIFICATION INDICES
+
+
+           THETA
+              EBADEP1       EBADEP2       EBADEP4       EBADEP5       EBADEP10
+              ________      ________      ________      ________      ________
+ EBADEP1        0.000
+ EBADEP2      140.926         0.000
+ EBADEP4        0.388         1.117         0.000
+ EBADEP5        4.290         0.436        30.278         0.000
+ EBADEP10       0.218         0.197         0.129         1.606         0.000
+ EBADEP18       0.048         0.685         6.515         0.137         0.328
+ EBADEP23       9.920        13.100        10.184         5.472         0.117
+ EBADEP24      10.600        13.498         0.420         0.009         1.162
+ EBADEP28       7.328         5.787         1.437         0.717         0.805
+ EBADEP29       0.393         1.755         0.211         0.013         1.521
+ EBADEP31       7.350         0.773         8.626         0.935         0.961
+ EBADEP38       0.622         1.205         1.371         0.054         1.298
+ EBADEP40      12.101         9.144        14.576         8.019         0.667
+ EBADEP43       1.049         3.507         0.864         4.950         0.131
+ EBADEP45       0.327         5.186         3.432         0.009         1.306
+
+
+           THETA
+              EBADEP18      EBADEP23      EBADEP24      EBADEP28      EBADEP29
+              ________      ________      ________      ________      ________
+ EBADEP18       0.000
+ EBADEP23      10.423         0.000
+ EBADEP24       6.006       111.462         0.000
+ EBADEP28      48.955        11.749         9.677         0.000
+ EBADEP29       0.558         0.603         1.181         0.351         0.000
+ EBADEP31       8.183        12.791        11.660         1.495         3.488
+ EBADEP38       5.834         0.509         4.338         0.283         1.814
+ EBADEP40       1.973         7.428         0.868         0.001         2.396
+ EBADEP43       0.262         0.034         1.418         0.861         0.744
+ EBADEP45       1.578         0.001         3.317         1.469         6.765
+
+
+           THETA
+              EBADEP31      EBADEP38      EBADEP40      EBADEP43      EBADEP45
+              ________      ________      ________      ________      ________
+ EBADEP31       0.000
+ EBADEP38       3.825         0.000
+ EBADEP40     128.825        17.631         0.000
+ EBADEP43       3.208         0.178         2.894         0.000
+ EBADEP45       1.566         0.113         3.270        10.414         0.000
+
+
+     EXPECTED PARAMETER CHANGE
+
+
+           THETA
+              EBADEP1       EBADEP2       EBADEP4       EBADEP5       EBADEP10
+              ________      ________      ________      ________      ________
+ EBADEP1        0.000
+ EBADEP2        0.261         0.000
+ EBADEP4       -0.022        -0.035         0.000
+ EBADEP5       -0.076         0.022         0.163         0.000
+ EBADEP10      -0.017         0.016         0.013         0.047         0.000
+ EBADEP18      -0.007         0.024        -0.090         0.012         0.020
+ EBADEP23      -0.116        -0.130         0.096        -0.086         0.013
+ EBADEP24      -0.119        -0.129         0.021         0.003        -0.041
+ EBADEP28      -0.092        -0.076        -0.039        -0.029         0.031
+ EBADEP29       0.023        -0.057         0.018         0.005         0.048
+ EBADEP31      -0.098        -0.029        -0.113        -0.036        -0.040
+ EBADEP38      -0.023        -0.030        -0.037         0.007        -0.042
+ EBADEP40      -0.125        -0.106        -0.150        -0.108        -0.033
+ EBADEP43      -0.043        -0.078        -0.042        -0.096        -0.016
+ EBADEP45      -0.020        -0.077         0.062        -0.003        -0.044
+
+
+           THETA
+              EBADEP18      EBADEP23      EBADEP24      EBADEP28      EBADEP29
+              ________      ________      ________      ________      ________
+ EBADEP18       0.000
+ EBADEP23      -0.112         0.000
+ EBADEP24      -0.080         0.246         0.000
+ EBADEP28       0.161        -0.119        -0.104         0.000
+ EBADEP29       0.026         0.028        -0.042         0.020         0.000
+ EBADEP31      -0.105        -0.140        -0.136         0.040        -0.081
+ EBADEP38      -0.070        -0.022         0.057        -0.015        -0.052
+ EBADEP40      -0.048        -0.103        -0.033         0.001        -0.062
+ EBADEP43       0.021        -0.008        -0.055         0.040        -0.044
+ EBADEP45       0.040        -0.001        -0.069         0.042         0.100
+
+
+           THETA
+              EBADEP31      EBADEP38      EBADEP40      EBADEP43      EBADEP45
+              ________      ________      ________      ________      ________
+ EBADEP31       0.000
+ EBADEP38       0.057         0.000
+ EBADEP40       0.272         0.116         0.000
+ EBADEP43       0.073         0.017         0.068         0.000
+ EBADEP45      -0.045         0.010        -0.066         0.123         0.000
+
+
+     MODIFICATION INDICES FOR ANALYSIS WITH 2 FACTOR(S)
+
+
+
+     MODIFICATION INDICES
+
+
+           THETA
+              EBADEP1       EBADEP2       EBADEP4       EBADEP5       EBADEP10
+              ________      ________      ________      ________      ________
+ EBADEP1        0.000
+ EBADEP2      160.082         0.000
+ EBADEP4        3.520         4.420         0.000
+ EBADEP5        8.264         0.054        27.285         0.000
+ EBADEP10       0.563         0.080         0.013         1.423         0.000
+ EBADEP18       0.004         1.237         4.809         0.486         0.422
+ EBADEP23      25.078        26.131         0.287        15.417         0.048
+ EBADEP24      22.031        23.762         2.815         0.713         1.938
+ EBADEP28       5.645         4.994         0.174         0.091         1.275
+ EBADEP29       0.067         3.057         0.009         0.047         1.382
+ EBADEP31       0.531         1.738         1.002         1.626         0.087
+ EBADEP38       0.212         0.964         0.073         0.399         1.612
+ EBADEP40       3.621         3.248         0.364         1.835         0.029
+ EBADEP43       0.280         2.679         0.012         3.725         0.054
+ EBADEP45       0.592         7.022         4.196         0.047         1.790
+
+
+           THETA
+              EBADEP18      EBADEP23      EBADEP24      EBADEP28      EBADEP29
+              ________      ________      ________      ________      ________
+ EBADEP18       0.000
+ EBADEP23       6.421         0.000
+ EBADEP24       3.269        98.919         0.000
+ EBADEP28      48.421         2.561         2.911         0.000
+ EBADEP29       0.894         0.069         3.046         1.107         0.000
+ EBADEP31      19.540         2.949         0.096         2.301         0.712
+ EBADEP38      10.768         1.024        16.766         3.327         1.913
+ EBADEP40       7.593         8.374        18.798        11.214         0.193
+ EBADEP43       0.048         2.099         0.042         0.058         0.421
+ EBADEP45       1.717         0.004         4.147         1.671         7.503
+
+
+           THETA
+              EBADEP31      EBADEP38      EBADEP40      EBADEP43      EBADEP45
+              ________      ________      ________      ________      ________
+ EBADEP31       0.000
+ EBADEP38       0.552         0.000
+ EBADEP40      22.298        13.700         0.000
+ EBADEP43       0.008         0.003         0.036         0.000
+ EBADEP45       1.088         0.056         3.355        13.306         0.000
+
+
+     EXPECTED PARAMETER CHANGE
+
+
+           THETA
+              EBADEP1       EBADEP2       EBADEP4       EBADEP5       EBADEP10
+              ________      ________      ________      ________      ________
+ EBADEP1        0.000
+ EBADEP2        0.271         0.000
+ EBADEP4       -0.064        -0.068         0.000
+ EBADEP5       -0.099         0.007         0.155         0.000
+ EBADEP10      -0.026         0.009         0.004         0.041         0.000
+ EBADEP18       0.002         0.030        -0.075         0.021         0.021
+ EBADEP23      -0.186        -0.183         0.019        -0.145         0.008
+ EBADEP24      -0.167        -0.165        -0.057        -0.028        -0.051
+ EBADEP28      -0.077        -0.067         0.014        -0.010         0.037
+ EBADEP29       0.009        -0.069        -0.004        -0.008         0.042
+ EBADEP31      -0.029         0.048         0.044         0.052        -0.013
+ EBADEP38      -0.013        -0.025        -0.008         0.018        -0.044
+ EBADEP40      -0.074        -0.067        -0.026        -0.055        -0.007
+ EBADEP43      -0.021        -0.064         0.005        -0.078        -0.010
+ EBADEP45      -0.025        -0.083         0.067        -0.007        -0.047
+
+
+           THETA
+              EBADEP18      EBADEP23      EBADEP24      EBADEP28      EBADEP29
+              ________      ________      ________      ________      ________
+ EBADEP18       0.000
+ EBADEP23      -0.088         0.000
+ EBADEP24      -0.057         0.310         0.000
+ EBADEP28       0.160        -0.056        -0.056         0.000
+ EBADEP29       0.030         0.010        -0.065         0.034         0.000
+ EBADEP31      -0.175         0.082         0.014        -0.061        -0.039
+ EBADEP38      -0.089         0.032         0.111        -0.050        -0.049
+ EBADEP40      -0.103         0.133         0.175        -0.133        -0.019
+ EBADEP43       0.008         0.065        -0.009         0.010        -0.031
+ EBADEP45       0.038         0.002        -0.074         0.042         0.097
+
+
+           THETA
+              EBADEP31      EBADEP38      EBADEP40      EBADEP43      EBADEP45
+              ________      ________      ________      ________      ________
+ EBADEP31       0.000
+ EBADEP38       0.026         0.000
+ EBADEP40       0.282         0.123         0.000
+ EBADEP43      -0.004        -0.002        -0.009         0.000
+ EBADEP45      -0.041         0.007        -0.071         0.129         0.000
+
+
+     MODIFICATION INDICES FOR ANALYSIS WITH 3 FACTOR(S)
+
+
+
+     MODIFICATION INDICES
+
+
+           THETA
+              EBADEP1       EBADEP2       EBADEP4       EBADEP5       EBADEP10
+              ________      ________      ________      ________      ________
+ EBADEP1        0.000
+ EBADEP2       64.198         0.000
+ EBADEP4        0.513         0.993         0.000
+ EBADEP5       13.198         0.024        26.611         0.000
+ EBADEP10       1.192         0.000         0.035         1.055         0.000
+ EBADEP18       7.111         4.910         6.312         0.166         0.177
+ EBADEP23       2.531         3.719         0.128        18.892         0.893
+ EBADEP24       2.702         3.956         6.527         0.039         0.998
+ EBADEP28      15.052        19.971         0.082         0.284         1.150
+ EBADEP29       0.197         5.260         0.386         0.386         1.105
+ EBADEP31       0.070         4.492         2.000         3.567         0.000
+ EBADEP38       5.697         3.225         0.328         0.658         1.867
+ EBADEP40       2.377         1.930         0.000         0.387         0.134
+ EBADEP43       0.040         1.626         0.003         4.030         0.024
+ EBADEP45       0.102         8.485         3.042         0.269         2.568
+
+
+           THETA
+              EBADEP18      EBADEP23      EBADEP24      EBADEP28      EBADEP29
+              ________      ________      ________      ________      ________
+ EBADEP18       0.000
+ EBADEP23       0.600         0.000
+ EBADEP24       0.055        15.989         0.000
+ EBADEP28      54.423         1.493         2.041         0.000
+ EBADEP29       0.562         0.705         2.305         0.933         0.000
+ EBADEP31      15.597         0.250         1.918         0.086         0.329
+ EBADEP38       8.977         0.385         7.679         3.129         2.334
+ EBADEP40       2.442         0.045         0.994         8.784         0.042
+ EBADEP43       0.504         0.403         1.891         0.355         0.394
+ EBADEP45       2.386         0.137         7.369         2.241         7.895
+
+
+           THETA
+              EBADEP31      EBADEP38      EBADEP40      EBADEP43      EBADEP45
+              ________      ________      ________      ________      ________
+ EBADEP31       0.000
+ EBADEP38       0.272         0.000
+ EBADEP40       8.148         4.025         0.000
+ EBADEP43       0.026         0.141         1.133         0.000
+ EBADEP45       0.429         0.011         3.546        16.693         0.000
+
+
+     EXPECTED PARAMETER CHANGE
+
+
+           THETA
+              EBADEP1       EBADEP2       EBADEP4       EBADEP5       EBADEP10
+              ________      ________      ________      ________      ________
+ EBADEP1        0.000
+ EBADEP2        0.414         0.000
+ EBADEP4       -0.026        -0.036         0.000
+ EBADEP5       -0.132         0.005         0.148         0.000
+ EBADEP10      -0.040         0.000        -0.006         0.032         0.000
+ EBADEP18      -0.090        -0.076        -0.081         0.012         0.012
+ EBADEP23       0.072         0.090        -0.015        -0.164         0.036
+ EBADEP24       0.070         0.086        -0.099        -0.007        -0.036
+ EBADEP28      -0.131        -0.149         0.009        -0.016         0.032
+ EBADEP29       0.017        -0.095        -0.022        -0.022         0.034
+ EBADEP31      -0.011         0.084         0.059         0.070        -0.001
+ EBADEP38       0.068         0.050        -0.017         0.022        -0.044
+ EBADEP40       0.073         0.064        -0.001        -0.026         0.016
+ EBADEP43       0.008        -0.053         0.002        -0.074        -0.006
+ EBADEP45      -0.011        -0.098         0.053        -0.016        -0.052
+
+
+           THETA
+              EBADEP18      EBADEP23      EBADEP24      EBADEP28      EBADEP29
+              ________      ________      ________      ________      ________
+ EBADEP18       0.000
+ EBADEP23      -0.028         0.000
+ EBADEP24       0.008         0.238         0.000
+ EBADEP28       0.159        -0.044        -0.047         0.000
+ EBADEP29       0.022         0.033        -0.057         0.029         0.000
+ EBADEP31      -0.142         0.023        -0.059        -0.010        -0.024
+ EBADEP38      -0.076        -0.021         0.083        -0.045        -0.050
+ EBADEP40      -0.059         0.011         0.045        -0.119         0.009
+ EBADEP43       0.025         0.029        -0.061         0.022        -0.027
+ EBADEP45       0.042        -0.014        -0.098         0.044         0.091
+
+
+           THETA
+              EBADEP31      EBADEP38      EBADEP40      EBADEP43      EBADEP45
+              ________      ________      ________      ________      ________
+ EBADEP31       0.000
+ EBADEP38       0.018         0.000
+ EBADEP40       0.211         0.079         0.000
+ EBADEP43       0.007        -0.013        -0.050         0.000
+ EBADEP45      -0.023         0.003        -0.073         0.132         0.000
+
+
+DIAGRAM INFORMATION
+
+  Mplus diagrams are currently not available for EFA.
+  No diagram output was produced.
+
+
+     Beginning Time:  16:47:36
+        Ending Time:  16:47:41
+       Elapsed Time:  00:00:05
+
+
+
+MUTHEN & MUTHEN
+3463 Stoner Ave.
+Los Angeles, CA  90066
+
+Tel: (310) 391-9971
+Fax: (310) 391-8971
+Web: www.StatModel.com
+Support: Support@StatModel.com
+
+Copyright (c) 1998-2013 Muthen & Muthen

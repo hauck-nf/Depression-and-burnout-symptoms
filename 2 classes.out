@@ -1,0 +1,617 @@
+Mplus VERSION 7.11
+MUTHEN & MUTHEN
+06/21/2022   4:00 PM
+
+INPUT INSTRUCTIONS
+
+  TITLE: Your title goes here
+  DATA: FILE = "EBB.dat";
+  VARIABLE:
+  NAMES = ID Hospital Idade Sexo Ecivil Nfilhos Formacao Tempoformacao Tempotrabalho
+       Tempofuncao Cargahoraria Turno Outraatividade EVENT1 EVENT2 EVENT3 EVENT4
+       EVENT5 EVENT6 EVENT7 EVENT8 EVENT9 EVENT10 EVENT11 EVENT12 EVENT13 EVENT14
+       EVENT15 EVENT16 EVENT17 EVENT18 EVENT19 EVENT20 EVENT21 EVENT22 EVENT23 EVENT24
+       EVENT25 EVENT26 EVENT27 EVENT28 EVENT29 EVENT30 EVENT31 EVENT32 EVENT33 EVENT34
+       EVENT35 EVENT36 EVENT37 EVENT38 EVENT39 EVENT40 ESUL1 ESUL2 ESUL3 ESUL4 ESUL5
+       ESUL6 ESUL7 ESUL8 ESUL9 ESUL10 ESUL11 ESUL12 ESUL13 ESUL14 ESUL15 ESUL16 ESUL17
+       ESUL18 ESUL19 ESUL20 ESUL21 EBADEP1 EBADEP2 EBADEP3 EBADEP4 EBADEP5 EBADEP6
+       EBADEP7 EBADEP8 EBADEP9 EBADEP10 EBADEP11 EBADEP12 EBADEP13 EBADEP14 EBADEP15
+       EBADEP16 EBADEP17 EBADEP18 EBADEP19 EBADEP20 EBADEP21 EBADEP22 EBADEP23
+       EBADEP24 EBADEP25 EBADEP26 EBADEP27 EBADEP28 EBADEP29 EBADEP30 EBADEP31
+       EBADEP32 EBADEP33 EBADEP34 EBADEP35 EBADEP36 EBADEP37 EBADEP38 EBADEP39
+       EBADEP40 EBADEP41 EBADEP42 EBADEP43 EBADEP44 EBADEP45 ECOGA1 ECOGA2 ECOGA3
+       ECOGA4 ECOGA5 ECOGA6 ECOGA7 ECOGA8 ECOGA9 ECOGA10 ECOGA11 ECOGA12 ECOGA13
+       ECOGA14 ECOGA15 ECOGA16 ECOGA17 ECOGA18 ECOGA19 ECOGA20 ECOGA21 ECOGA22 ECOGA23
+       ECOGA24 ECOGA25 ECOGA26 ECOGA27 ECOGA28 ECOGA29 ECOGA30 ECOGA31 ECOGA32 ECOGA33
+       ECOGA34 ECOGA35 ECOGA36 ECOGA37 ECOGA38 ECOGA39 ECOGA40 EBB1 EBB2 EBB3 EBB4
+       EBB5 EBB6 EBB7 EBB8 EBB9 EBB10 EBB11 EBB12 EBB13 EBB14 EBB15 EBB16 EBB17 EBB18
+       EBB19 EBB20 EBB21 EBB22 EBB23 EBB24 EBB25 EBB26 EBB27 EBB28 EBB29 EBB30 EBB31
+       EBB32 EBB33 EBB34 EBB35 EBB36 EBB37 EBB38 EVENTTot ESULF1 ESULF2 ESULTot
+       EBADEPTot ECOGAF1 ECOGAF2 ECOGAF3 ECOGAF4 ECOGATot EBBF1 EBBF2 EBBTot
+       IdadeClass FormacaoClass TempoTrabClass TempoFuncaoClass EVENTF1 EVENTF2
+       EVENTF3 EVENT1Class EVENT2Class EVENTF3Class ESULF1Class ESULF2Class
+       EBADEPClass ECOGAF1Class ECOGAF2Class ECOGAF3Classi ECOGAF4Class EBBF1Class
+       EBBF2Class;
+  MISSING=.;
+  IDVARIABLE = ID;
+  USEVARIABLE =
+  !EBADEP1 EBADEP2 EBADEP4 EBADEP5 EBADEP10 EBADEP18
+  !EBADEP23 EBADEP24 EBADEP28 EBADEP29 EBADEP31 EBADEP38
+  !EBADEP40 EBADEP43 EBADEP45
+  !EBB5 EBB6 EBB8 EBB9 EBB13 EBB14 EBB17 EBB18
+  !EBB20 EBB22 EBB23 EBB24 EBB26 EBB27 EBB29 EBB31
+  !EBB34 EBB35 EBB36 EBB38
+
+  !EBADEPTot
+  !EBBF1 EBBF2
+  !EVENTTot
+  !EXHAUST
+  BURNOUT
+  DEPRESSION
+  ;
+  CLASSES = c(2);
+  DEFINE:
+  EBB5 =EBB5+1;
+  EBB6 =EBB6+1;
+  EBB8 =EBB8+1;
+  EBB9 =EBB9+1;
+  EBB13 =EBB13+1;
+  EBB14 =EBB14+1;
+  EBB17 =EBB17+1;
+  EBB18 =EBB18+1;
+  EBB20 =EBB20+1;
+  EBB22 =EBB22+1;
+  EBB23 =EBB23+1;
+  EBB24 =EBB24+1;
+  EBB26 =EBB26+1;
+  EBB27 =EBB27+1;
+  EBB29 =EBB29+1;
+  EBB31=EBB31+1;
+  EBB34 =EBB34+1;
+  EBB35 =EBB35+1;
+  EBB36 =EBB36+1;
+  EBB38=EBB38+1;
+
+  BURNOUT = ((5-EBB5)+(5-EBB6)+EBB8+EBB9+EBB13+EBB14+(5-EBB17)+EBB18+
+  EBB20+EBB22+(5-EBB23)+EBB24+EBB26+EBB27+(5-EBB29)+EBB31+
+  (5-EBB34)+(5-EBB35)+(5-EBB36)+(5-EBB38))/20;
+
+  DEPRESSION = (EBADEP1+EBADEP2+EBADEP4+EBADEP5+EBADEP10+EBADEP18+
+  EBADEP23+EBADEP24+EBADEP28+EBADEP29+EBADEP31+EBADEP38+
+  EBADEP40+EBADEP43+EBADEP45)/15;
+
+  STANDARDIZE BURNOUT DEPRESSION;
+  !CATEGORICAL = ALL;
+  ANALYSIS:
+  !TYPE=EFA 1 3;
+  !ROTATION=BI-GEOMIN(OBLIQUE);
+  TYPE = MIXTURE;
+  !ESTIMATOR IS MLR;
+  STARTS = 100 10;!COMEÇAR TESTANDO COM MENOS, TIPO 100 10. O VALOR ALTO É PARA AS SOLUÇÕES
+  !LRTSTARTS = 0 0 100 10
+  OPTSEED = 533738;
+  !ALGORITHM=INTEGRATION;
+  !PROCESS = 3 (STARTS);
+  !ITERATIONS = 10000;
+  !CONVERGENCE = 0.001;
+
+  MODEL:
+  !dep by EBADEP1 EBADEP2 EBADEP4 EBADEP5 EBADEP10 EBADEP18
+  !EBADEP23 EBADEP24 EBADEP28 EBADEP29 EBADEP31 EBADEP38
+  !EBADEP40 EBADEP43 EBADEP45;
+  !burn by EBB5@-.79 EBB6 EBB8 EBB9 EBB13 EBB14 EBB17 EBB18
+  !EBB20 EBB22 EBB23 EBB24 EBB26 EBB27 EBB29 EBB31
+  !EBB34 EBB35 EBB36 EBB38;
+
+  !F1-F3 by EBADEP1 EBADEP2 EBADEP4 EBADEP5 EBADEP10 EBADEP18
+  !EBADEP23 EBADEP24 EBADEP28 EBADEP29 EBADEP31 EBADEP38
+  !EBADEP40 EBADEP43 EBADEP45
+  !EBB5 EBB6 EBB8 EBB9 EBB13 EBB14 EBB17 EBB18
+  !EBB20 EBB22 EBB23 EBB24 EBB26 EBB27 EBB29 EBB31
+  !EBB34 EBB35 EBB36 EBB38 (*1);
+
+  !FG by EBADEP1* EBADEP2 EBADEP4 EBADEP5 EBADEP10 EBADEP18
+  !EBADEP23 EBADEP24 EBADEP28 EBADEP29 EBADEP31 EBADEP38
+  !EBADEP40 EBADEP43 EBADEP45
+  !EBB5 EBB6 EBB8 EBB9 EBB13 EBB14 EBB17 EBB18
+  !EBB20 EBB22 EBB23 EBB24 EBB26 EBB27 EBB29 EBB31
+  !EBB34 EBB35 EBB36 EBB38 ;
+  !FG@1;
+
+  !DEP by EBADEP1* EBADEP2 EBADEP4 EBADEP5 EBADEP10 EBADEP18
+  !EBADEP23 EBADEP24 EBADEP28 EBADEP29 EBADEP31 EBADEP38
+  !EBADEP40 EBADEP43 EBADEP45;
+  !DEP@1;
+
+  !BURN by EBB5* EBB6 EBB8 EBB9 EBB13 EBB14 EBB17 EBB18
+  !EBB20 EBB22 EBB23 EBB24 EBB26 EBB27 EBB29 EBB31
+  !EBB34 EBB35 EBB36 EBB38;
+  !BURN@1;
+
+  !acq by EBB5@1 EBB6@1 EBB8@1 EBB9@1 EBB13@1 EBB14@1 EBB17@1 EBB18@1
+  !EBB20@1 EBB22@1 EBB23@1 EBB24@1 EBB26@1 EBB27@1 EBB29@1 EBB31@1
+  !EBB34@1 EBB35@1 EBB36@1 EBB38@1;
+  !Acq;
+  !Acq with BURN@0;
+
+  !FG with DEP@0 BURN@0;
+
+  !acq by
+  !EBADEP1@1 EBADEP2@1 EBADEP4@1 EBADEP5@1 EBADEP10@1 EBADEP18@1
+  !EBADEP23@1 EBADEP24@1 EBADEP28@1 EBADEP29@1 EBADEP31@1 EBADEP38@1
+  !EBADEP40@1 EBADEP43@1 EBADEP45@1
+  !EBB5@1 EBB6@1 EBB8@1 EBB9@1 EBB13@1 EBB14@1 EBB17@1 EBB18@1
+  !EBB20@1 EBB22@1 EBB23@1 EBB24@1 EBB26@1 EBB27@1 EBB29@1 EBB31@1
+  !EBB34@1 EBB35@1 EBB36@1 EBB38@1;
+  !acq@.103;
+  !acq with FG@0 DEP@0 BURN@0;
+  !acq with DEP@0 BURN@0;
+
+
+  !F1 by EBB8* EBB9 EBB13 EBB14  EBB18
+  !EBB20 EBB22 EBB23 EBB24 EBB26 EBB27 EBB29 EBB31
+  !EBB34 EBB35 EBB36 EBB38;
+  !F1@1;
+
+  !F2 by EBB5* EBB6 EBB17 EBB23 EBB29 EBB34 EBB35 EBB36 EBB38;
+  !F2@1;
+
+  !acq by EBB5@1 EBB6@1 EBB8@1 EBB9@1 EBB13@1 EBB14@1 EBB17@1 EBB18@1
+  !EBB20@1 EBB22@1 EBB23@1 EBB24@1 EBB26@1 EBB27@1 EBB29@1 EBB31@1
+  !EBB34@1 EBB35@1 EBB36@1 EBB38@1;
+  !acq@.109;
+  !acq with F1@0 F2@0;
+
+
+
+  !acq by EBADEP1@1 EBADEP2@1 EBADEP4@1 EBADEP5@1 EBADEP10@1 EBADEP18@1
+  !EBADEP23@1 EBADEP24@1 EBADEP28@1 EBADEP29@1 EBADEP31@1 EBADEP38@1
+  !EBADEP40@1 EBADEP43@1 EBADEP45@1
+  !EBB5@1 EBB6@1 EBB8@1 EBB9@1 EBB13@1 EBB14@1 EBB17@1 EBB18@1
+  !EBB20@1 EBB22@1 EBB23@1 EBB24@1 EBB26@1 EBB27@1 EBB29@1 EBB31@1
+  !EBB34@1 EBB35@1 EBB36@1 EBB38@1;
+  !acq@.103;
+  !acq with F1@0 F2@0 F3@0;
+  !acq with FG@0 DEP@0 BURN@0;
+
+
+  MODEL:
+  !%OVERALL%
+  !c ON EVENTTot;
+
+
+  Output: standardized modindices;
+  OUTPUT: tech11 tech14;
+
+  !PLOT:
+  !type is plot3;
+  !series is EBADEPTot (1) EXHAUST (2);
+
+  !SAVEDATA:
+  !file is 4 classes.txt;
+  !save is cprob;
+  !format is free;
+
+
+
+*** WARNING
+  Input line exceeded 90 characters. Some input may be truncated.
+  STARTS = 100 10;!COMEÇAR TESTANDO COM MENOS, TIPO 100 10. O VALOR ALTO É PARA AS SOLUÇÕES C
+*** WARNING in DEFINE command
+  The STANDARDIZE transformation is done after all other DEFINE transformations
+  have been completed.
+*** WARNING in VARIABLE command
+  Note that only the first 8 characters of variable names are used in the output.
+  Shorten variable names to avoid any confusion.
+*** WARNING in MODEL command
+  All variables are uncorrelated with all other variables within class.
+  Check that this is what is intended.
+*** WARNING
+  Data set contains cases with missing on all variables.
+  These cases were not included in the analysis.
+  Number of cases with missing on all variables:  30
+   5 WARNING(S) FOUND IN THE INPUT INSTRUCTIONS
+
+
+
+Your title goes here
+
+SUMMARY OF ANALYSIS
+
+Number of groups                                                 1
+Number of observations                                         554
+
+Number of dependent variables                                    2
+Number of independent variables                                  0
+Number of continuous latent variables                            0
+Number of categorical latent variables                           1
+
+Observed dependent variables
+
+  Continuous
+   BURNOUT     DEPRESSION
+
+Categorical latent variables
+   C
+
+Variables with special functions
+
+  ID variable           ID
+
+Estimator                                                      MLR
+Information matrix                                        OBSERVED
+Optimization Specifications for the Quasi-Newton Algorithm for
+Continuous Outcomes
+  Maximum number of iterations                                 100
+  Convergence criterion                                  0.100D-05
+Optimization Specifications for the EM Algorithm
+  Maximum number of iterations                                 500
+  Convergence criteria
+    Loglikelihood change                                 0.100D-06
+    Relative loglikelihood change                        0.100D-06
+    Derivative                                           0.100D-05
+Optimization Specifications for the M step of the EM Algorithm for
+Categorical Latent variables
+  Number of M step iterations                                    1
+  M step convergence criterion                           0.100D-05
+  Basis for M step termination                           ITERATION
+Optimization Specifications for the M step of the EM Algorithm for
+Censored, Binary or Ordered Categorical (Ordinal), Unordered
+Categorical (Nominal) and Count Outcomes
+  Number of M step iterations                                    1
+  M step convergence criterion                           0.100D-05
+  Basis for M step termination                           ITERATION
+  Maximum value for logit thresholds                            15
+  Minimum value for logit thresholds                           -15
+  Minimum expected cell size for chi-square              0.100D-01
+Maximum number of iterations for H1                           2000
+Convergence criterion for H1                             0.100D-03
+Optimization algorithm                                         EMA
+Random Starts Specifications
+  Random seed for analysis                                  533738
+
+Input data file(s)
+  EBB.dat
+Input data format  FREE
+
+
+SUMMARY OF DATA
+
+     Number of missing data patterns             3
+     Number of y missing data patterns           3
+     Number of u missing data patterns           0
+
+
+COVARIANCE COVERAGE OF DATA
+
+Minimum covariance coverage value   0.100
+
+
+     PROPORTION OF DATA PRESENT FOR Y
+
+
+           Covariance Coverage
+              BURNOUT       DEPRESSI
+              ________      ________
+ BURNOUT        0.671
+ DEPRESSI       0.632         0.960
+
+
+
+THE MODEL ESTIMATION TERMINATED NORMALLY
+
+
+
+MODEL FIT INFORMATION
+
+Number of Free Parameters                        7
+
+Loglikelihood
+
+          H0 Value                       -1207.342
+          H0 Scaling Correction Factor      1.1153
+            for MLR
+
+Information Criteria
+
+          Akaike (AIC)                    2428.684
+          Bayesian (BIC)                  2458.904
+          Sample-Size Adjusted BIC        2436.683
+            (n* = (n + 2) / 24)
+
+
+
+FINAL CLASS COUNTS AND PROPORTIONS FOR THE LATENT CLASSES
+BASED ON THE ESTIMATED MODEL
+
+    Latent
+   Classes
+
+       1        254.21221          0.45887
+       2        299.78779          0.54113
+
+
+FINAL CLASS COUNTS AND PROPORTIONS FOR THE LATENT CLASS PATTERNS
+BASED ON ESTIMATED POSTERIOR PROBABILITIES
+
+    Latent
+   Classes
+
+       1        254.21232          0.45887
+       2        299.78768          0.54113
+
+
+CLASSIFICATION QUALITY
+
+     Entropy                         0.614
+
+
+CLASSIFICATION OF INDIVIDUALS BASED ON THEIR MOST LIKELY LATENT CLASS MEMBERSHIP
+
+Class Counts and Proportions
+
+    Latent
+   Classes
+
+       1              260          0.46931
+       2              294          0.53069
+
+
+Average Latent Class Probabilities for Most Likely Latent Class Membership (Row)
+by Latent Class (Column)
+
+           1        2
+
+    1   0.855    0.145
+    2   0.108    0.892
+
+
+Classification Probabilities for the Most Likely Latent Class Membership (Row)
+by Latent Class (Column)
+
+           1        2
+
+    1   0.875    0.125
+    2   0.126    0.874
+
+
+Logits for the Classification Probabilities for the Most Likely Latent Class Membership (Row)
+by Latent Class (Column)
+
+              1        2
+
+    1      1.942    0.000
+    2     -1.939    0.000
+
+
+MODEL RESULTS
+
+                                                    Two-Tailed
+                    Estimate       S.E.  Est./S.E.    P-Value
+
+Latent Class 1
+
+ Means
+    BURNOUT           -0.896      0.065    -13.843      0.000
+    DEPRESSION        -0.547      0.047    -11.588      0.000
+
+ Variances
+    BURNOUT            0.290      0.023     12.503      0.000
+    DEPRESSION         0.743      0.073     10.205      0.000
+
+Latent Class 2
+
+ Means
+    BURNOUT            0.790      0.051     15.392      0.000
+    DEPRESSION         0.467      0.076      6.157      0.000
+
+ Variances
+    BURNOUT            0.290      0.023     12.503      0.000
+    DEPRESSION         0.743      0.073     10.205      0.000
+
+Categorical Latent Variables
+
+ Means
+    C#1               -0.165      0.138     -1.192      0.233
+
+
+STANDARDIZED MODEL RESULTS
+
+
+STDYX Standardization
+
+                                                    Two-Tailed
+                    Estimate       S.E.  Est./S.E.    P-Value
+
+Latent Class 1
+
+ Means
+    BURNOUT           -1.664      0.160    -10.370      0.000
+    DEPRESSION        -0.634      0.073     -8.655      0.000
+
+ Variances
+    BURNOUT            1.000      0.000    999.000    999.000
+    DEPRESSION         1.000      0.000    999.000    999.000
+
+Latent Class 2
+
+ Means
+    BURNOUT            1.467      0.111     13.236      0.000
+    DEPRESSION         0.542      0.090      5.994      0.000
+
+ Variances
+    BURNOUT            1.000      0.000    999.000    999.000
+    DEPRESSION         1.000      0.000    999.000    999.000
+
+
+STDY Standardization
+
+                                                    Two-Tailed
+                    Estimate       S.E.  Est./S.E.    P-Value
+
+Latent Class 1
+
+ Means
+    BURNOUT           -1.664      0.160    -10.370      0.000
+    DEPRESSION        -0.634      0.073     -8.655      0.000
+
+ Variances
+    BURNOUT            1.000      0.000    999.000    999.000
+    DEPRESSION         1.000      0.000    999.000    999.000
+
+Latent Class 2
+
+ Means
+    BURNOUT            1.467      0.111     13.236      0.000
+    DEPRESSION         0.542      0.090      5.994      0.000
+
+ Variances
+    BURNOUT            1.000      0.000    999.000    999.000
+    DEPRESSION         1.000      0.000    999.000    999.000
+
+
+STD Standardization
+
+                                                    Two-Tailed
+                    Estimate       S.E.  Est./S.E.    P-Value
+
+Latent Class 1
+
+ Means
+    BURNOUT           -0.896      0.065    -13.843      0.000
+    DEPRESSION        -0.547      0.047    -11.588      0.000
+
+ Variances
+    BURNOUT            0.290      0.023     12.503      0.000
+    DEPRESSION         0.743      0.073     10.205      0.000
+
+Latent Class 2
+
+ Means
+    BURNOUT            0.790      0.051     15.392      0.000
+    DEPRESSION         0.467      0.076      6.157      0.000
+
+ Variances
+    BURNOUT            0.290      0.023     12.503      0.000
+    DEPRESSION         0.743      0.073     10.205      0.000
+
+
+R-SQUARE
+
+Class 1
+
+Class 2
+
+
+QUALITY OF NUMERICAL RESULTS
+
+     Condition Number for the Information Matrix              0.371E-01
+       (ratio of smallest to largest eigenvalue)
+
+
+MODEL MODIFICATION INDICES
+
+NOTE:  Modification indices for direct effects of observed dependent variables
+regressed on covariates may not be included.  To include these, request
+MODINDICES (ALL).
+
+Minimum M.I. value for printing the modification index    10.000
+
+                                   M.I.     E.P.C.  Std E.P.C.  StdYX E.P.C.
+
+CLASS 1
+
+
+Variances/Residual Variances
+
+BURNOUT                           50.703     1.283      1.283        4.427
+DEPRESSI                          58.332    -0.468     -0.468       -0.630
+
+CLASS 2
+
+
+WITH Statements
+
+DEPRESSI WITH BURNOUT             25.383     0.226      0.226        0.486
+
+Variances/Residual Variances
+
+BURNOUT                           50.703    -0.811     -0.811       -2.798
+DEPRESSI                          58.332     0.324      0.324        0.437
+
+Categorical Latent Variables
+
+No modification indices above the minimum value.
+
+
+
+TECHNICAL 11 OUTPUT
+
+     Random Starts Specifications for the k-1 Class Analysis Model
+        Number of initial stage random starts                  20
+        Number of final stage optimizations                     4
+
+
+
+     VUONG-LO-MENDELL-RUBIN LIKELIHOOD RATIO TEST FOR 1 (H0) VERSUS 2 CLASSES
+
+          H0 Loglikelihood Value                        -1281.719
+          2 Times the Loglikelihood Difference            148.755
+          Difference in the Number of Parameters                3
+          Mean                                              5.809
+          Standard Deviation                                5.300
+          P-Value                                          0.0000
+
+     LO-MENDELL-RUBIN ADJUSTED LRT TEST
+
+          Value                                           141.299
+          P-Value                                          0.0000
+
+
+TECHNICAL 14 OUTPUT
+
+     Random Starts Specifications for the k-1 Class Analysis Model
+        Number of initial stage random starts                  20
+        Number of final stage optimizations                     4
+
+     Random Starts Specification for the k-1 Class Model for Generated Data
+        Number of initial stage random starts                   0
+        Number of final stage optimizations for the
+           initial stage random starts                          0
+     Random Starts Specification for the k Class Model for Generated Data
+        Number of initial stage random starts                  40
+        Number of final stage optimizations                     8
+     Number of bootstrap draws requested                   Varies
+
+
+     PARAMETRIC BOOTSTRAPPED LIKELIHOOD RATIO TEST FOR 1 (H0) VERSUS 2 CLASSES
+
+          H0 Loglikelihood Value                        -1281.719
+          2 Times the Loglikelihood Difference            148.755
+          Difference in the Number of Parameters                3
+          Approximate P-Value                              0.0000
+          Successful Bootstrap Draws                            5
+
+
+DIAGRAM INFORMATION
+
+  Mplus diagrams are currently not available for Mixture analysis.
+  No diagram output was produced.
+
+
+     Beginning Time:  16:00:35
+        Ending Time:  16:00:42
+       Elapsed Time:  00:00:07
+
+
+
+MUTHEN & MUTHEN
+3463 Stoner Ave.
+Los Angeles, CA  90066
+
+Tel: (310) 391-9971
+Fax: (310) 391-8971
+Web: www.StatModel.com
+Support: Support@StatModel.com
+
+Copyright (c) 1998-2013 Muthen & Muthen

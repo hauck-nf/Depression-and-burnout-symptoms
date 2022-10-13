@@ -1,0 +1,957 @@
+Mplus VERSION 7.11
+MUTHEN & MUTHEN
+06/15/2022   3:14 PM
+
+INPUT INSTRUCTIONS
+
+  TITLE: Your title goes here
+  DATA: FILE = "EBB.dat";
+  VARIABLE:
+  NAMES = ID Hospital Idade Sexo Ecivil Nfilhos Formacao Tempoformacao Tempotrabalho
+       Tempofuncao Cargahoraria Turno Outraatividade EVENT1 EVENT2 EVENT3 EVENT4
+       EVENT5 EVENT6 EVENT7 EVENT8 EVENT9 EVENT10 EVENT11 EVENT12 EVENT13 EVENT14
+       EVENT15 EVENT16 EVENT17 EVENT18 EVENT19 EVENT20 EVENT21 EVENT22 EVENT23 EVENT24
+       EVENT25 EVENT26 EVENT27 EVENT28 EVENT29 EVENT30 EVENT31 EVENT32 EVENT33 EVENT34
+       EVENT35 EVENT36 EVENT37 EVENT38 EVENT39 EVENT40 ESUL1 ESUL2 ESUL3 ESUL4 ESUL5
+       ESUL6 ESUL7 ESUL8 ESUL9 ESUL10 ESUL11 ESUL12 ESUL13 ESUL14 ESUL15 ESUL16 ESUL17
+       ESUL18 ESUL19 ESUL20 ESUL21 EBADEP1 EBADEP2 EBADEP3 EBADEP4 EBADEP5 EBADEP6
+       EBADEP7 EBADEP8 EBADEP9 EBADEP10 EBADEP11 EBADEP12 EBADEP13 EBADEP14 EBADEP15
+       EBADEP16 EBADEP17 EBADEP18 EBADEP19 EBADEP20 EBADEP21 EBADEP22 EBADEP23
+       EBADEP24 EBADEP25 EBADEP26 EBADEP27 EBADEP28 EBADEP29 EBADEP30 EBADEP31
+       EBADEP32 EBADEP33 EBADEP34 EBADEP35 EBADEP36 EBADEP37 EBADEP38 EBADEP39
+       EBADEP40 EBADEP41 EBADEP42 EBADEP43 EBADEP44 EBADEP45 ECOGA1 ECOGA2 ECOGA3
+       ECOGA4 ECOGA5 ECOGA6 ECOGA7 ECOGA8 ECOGA9 ECOGA10 ECOGA11 ECOGA12 ECOGA13
+       ECOGA14 ECOGA15 ECOGA16 ECOGA17 ECOGA18 ECOGA19 ECOGA20 ECOGA21 ECOGA22 ECOGA23
+       ECOGA24 ECOGA25 ECOGA26 ECOGA27 ECOGA28 ECOGA29 ECOGA30 ECOGA31 ECOGA32 ECOGA33
+       ECOGA34 ECOGA35 ECOGA36 ECOGA37 ECOGA38 ECOGA39 ECOGA40 EBB1 EBB2 EBB3 EBB4
+       EBB5 EBB6 EBB7 EBB8 EBB9 EBB10 EBB11 EBB12 EBB13 EBB14 EBB15 EBB16 EBB17 EBB18
+       EBB19 EBB20 EBB21 EBB22 EBB23 EBB24 EBB25 EBB26 EBB27 EBB28 EBB29 EBB30 EBB31
+       EBB32 EBB33 EBB34 EBB35 EBB36 EBB37 EBB38 EVENTTot ESULF1 ESULF2 ESULTot
+       EBADEPTot ECOGAF1 ECOGAF2 ECOGAF3 ECOGAF4 ECOGATot EBBF1 EBBF2 EBBTot
+       IdadeClass FormacaoClass TempoTrabClass TempoFuncaoClass EVENTF1 EVENTF2
+       EVENTF3 EVENT1Class EVENT2Class EVENTF3Class ESULF1Class ESULF2Class
+       EBADEPClass ECOGAF1Class ECOGAF2Class ECOGAF3Classi ECOGAF4Class EBBF1Class
+       EBBF2Class;
+  MISSING=.;
+  IDVARIABLE = ID;
+  USEVARIABLE =
+  !EBADEP1 EBADEP2 EBADEP4 EBADEP5 EBADEP10 EBADEP18
+  !EBADEP23 EBADEP24 EBADEP28 EBADEP29 EBADEP31 EBADEP38
+  !EBADEP40 EBADEP43 EBADEP45
+  EBB5 EBB6 EBB8 EBB9 EBB13 EBB14 EBB17 EBB18
+  EBB20 EBB22 EBB23 EBB24 EBB26 EBB27 EBB29 EBB31
+  EBB34 EBB35 EBB36 EBB38
+
+  !EBADEPTot
+  !EBBF1 EBBF2
+  !EVENTTot
+  !EXHAUST
+  ;
+  !CLASSES = c(4);
+  !DEFINE:
+  !EXHAUST = ((4-EBB5)+(4-EBB6)+EBB8+EBB9+EBB13+EBB14+(4-EBB17)+EBB18+
+  !EBB20+EBB22+(4-EBB23)+EBB24+EBB26+EBB27+(4-EBB29)+EBB31+
+  !EBB34+(4-EBB35)+(4-EBB36)+(4-EBB38))/20;
+
+  !STANDARDIZE EBADEPTot EXHAUST;
+  CATEGORICAL = ALL;
+  ANALYSIS:
+  !TYPE=EFA 1 3;
+  !ROTATION=BI-GEOMIN(OBLIQUE);
+  !TYPE = MIXTURE;
+  !ESTIMATOR IS MLR;
+  !STARTS = 100 10;!COMEÇAR TESTANDO COM MENOS, TIPO 100 10. O VALOR ALTO É PARA AS SOLUÇÕES
+  !LRTSTARTS = 0 0 100 10
+  !OPTSEED = 136842;
+  !ALGORITHM=INTEGRATION;
+  !PROCESS = 3 (STARTS);
+  !ITERATIONS = 10000;
+  !CONVERGENCE = 0.001;
+
+  MODEL:
+  !dep by EBADEP1 EBADEP2 EBADEP4 EBADEP5 EBADEP10 EBADEP18
+  !EBADEP23 EBADEP24 EBADEP28 EBADEP29 EBADEP31 EBADEP38
+  !EBADEP40 EBADEP43 EBADEP45;
+  !burn by EBB5@-.79 EBB6 EBB8 EBB9 EBB13 EBB14 EBB17 EBB18
+  !EBB20 EBB22 EBB23 EBB24 EBB26 EBB27 EBB29 EBB31
+  !EBB34 EBB35 EBB36 EBB38;
+
+  !F1-F3 by EBADEP1 EBADEP2 EBADEP4 EBADEP5 EBADEP10 EBADEP18
+  !EBADEP23 EBADEP24 EBADEP28 EBADEP29 EBADEP31 EBADEP38
+  !EBADEP40 EBADEP43 EBADEP45
+  !EBB5 EBB6 EBB8 EBB9 EBB13 EBB14 EBB17 EBB18
+  !EBB20 EBB22 EBB23 EBB24 EBB26 EBB27 EBB29 EBB31
+  !EBB34 EBB35 EBB36 EBB38 (*1);
+
+  !FG by EBADEP1* EBADEP2 EBADEP4 EBADEP5 EBADEP10 EBADEP18
+  !EBADEP23 EBADEP24 EBADEP28 EBADEP29 EBADEP31 EBADEP38
+  !EBADEP40 EBADEP43 EBADEP45
+  !EBB5 EBB6 EBB8 EBB9 EBB13 EBB14 EBB17 EBB18
+  !EBB20 EBB22 EBB23 EBB24 EBB26 EBB27 EBB29 EBB31
+  !EBB34 EBB35 EBB36 EBB38 ;
+  !FG@1;
+
+  !DEP by EBADEP1* EBADEP2 EBADEP4 EBADEP5 EBADEP10 EBADEP18
+  !EBADEP23 EBADEP24 EBADEP28 EBADEP29 EBADEP31 EBADEP38
+  !EBADEP40 EBADEP43 EBADEP45;
+  !DEP@1;
+
+  BURN by EBB5* EBB6 EBB8 EBB9 EBB13 EBB14 EBB17 EBB18
+  EBB20 EBB22 EBB23 EBB24 EBB26 EBB27 EBB29 EBB31
+  EBB34 EBB35 EBB36 EBB38;
+  BURN@1;
+
+  acq by EBB5@1 EBB6@1 EBB8@1 EBB9@1 EBB13@1 EBB14@1 EBB17@1 EBB18@1
+  EBB20@1 EBB22@1 EBB23@1 EBB24@1 EBB26@1 EBB27@1 EBB29@1 EBB31@1
+  EBB34@1 EBB35@1 EBB36@1 EBB38@1;
+  Acq;
+  Acq with BURN@0;
+
+  !FG with DEP@0 BURN@0;
+
+  !acq by
+  !EBADEP1@1 EBADEP2@1 EBADEP4@1 EBADEP5@1 EBADEP10@1 EBADEP18@1
+  !EBADEP23@1 EBADEP24@1 EBADEP28@1 EBADEP29@1 EBADEP31@1 EBADEP38@1
+  !EBADEP40@1 EBADEP43@1 EBADEP45@1
+  !EBB5@1 EBB6@1 EBB8@1 EBB9@1 EBB13@1 EBB14@1 EBB17@1 EBB18@1
+  !EBB20@1 EBB22@1 EBB23@1 EBB24@1 EBB26@1 EBB27@1 EBB29@1 EBB31@1
+  !EBB34@1 EBB35@1 EBB36@1 EBB38@1;
+  !acq;
+  !acq with FG@0 DEP@0 BURN@0;
+
+
+  !F1 by EBB8* EBB9 EBB13 EBB14  EBB18
+  !EBB20 EBB22 EBB23 EBB24 EBB26 EBB27 EBB29 EBB31
+  !EBB34 EBB35 EBB36 EBB38;
+  !F1@1;
+
+  !F2 by EBB5* EBB6 EBB17 EBB23 EBB29 EBB34 EBB35 EBB36 EBB38;
+  !F2@1;
+
+  !acq by EBB5@1 EBB6@1 EBB8@1 EBB9@1 EBB13@1 EBB14@1 EBB17@1 EBB18@1
+  !EBB20@1 EBB22@1 EBB23@1 EBB24@1 EBB26@1 EBB27@1 EBB29@1 EBB31@1
+  !EBB34@1 EBB35@1 EBB36@1 EBB38@1;
+  !acq@.109;
+  !acq with F1@0 F2@0;
+
+
+
+  !acq by EBADEP1@1 EBADEP2@1 EBADEP4@1 EBADEP5@1 EBADEP10@1 EBADEP18@1
+  !EBADEP23@1 EBADEP24@1 EBADEP28@1 EBADEP29@1 EBADEP31@1 EBADEP38@1
+  !EBADEP40@1 EBADEP43@1 EBADEP45@1
+  !EBB5@1 EBB6@1 EBB8@1 EBB9@1 EBB13@1 EBB14@1 EBB17@1 EBB18@1
+  !EBB20@1 EBB22@1 EBB23@1 EBB24@1 EBB26@1 EBB27@1 EBB29@1 EBB31@1
+  !EBB34@1 EBB35@1 EBB36@1 EBB38@1;
+  !acq@.103;
+  !acq with F1@0 F2@0 F3@0;
+  !acq with FG@0 DEP@0 BURN@0;
+
+
+  MODEL:
+  !%OVERALL%
+  !c ON EVENTTot;
+
+
+  Output: standardized modindices;
+  !OUTPUT: tech11 tech14;
+
+  !PLOT:
+  !type is plot3;
+  !series is EBADEPTot (1) EXHAUST (2);
+
+  !SAVEDATA:
+  !file is 4 classes.txt;
+  !save is cprob;
+  !format is free;
+
+
+
+*** WARNING
+  Data set contains cases with missing on all variables.
+  These cases were not included in the analysis.
+  Number of cases with missing on all variables:  2
+   1 WARNING(S) FOUND IN THE INPUT INSTRUCTIONS
+
+
+
+Your title goes here
+
+SUMMARY OF ANALYSIS
+
+Number of groups                                                 1
+Number of observations                                         582
+
+Number of dependent variables                                   20
+Number of independent variables                                  0
+Number of continuous latent variables                            2
+
+Observed dependent variables
+
+  Binary and ordered categorical (ordinal)
+   EBB5        EBB6        EBB8        EBB9        EBB13       EBB14
+   EBB17       EBB18       EBB20       EBB22       EBB23       EBB24
+   EBB26       EBB27       EBB29       EBB31       EBB34       EBB35
+   EBB36       EBB38
+
+Continuous latent variables
+   BURN        ACQ
+
+Variables with special functions
+
+  ID variable           ID
+
+Estimator                                                    WLSMV
+Maximum number of iterations                                  1000
+Convergence criterion                                    0.500D-04
+Maximum number of steepest descent iterations                   20
+Maximum number of iterations for H1                           2000
+Convergence criterion for H1                             0.100D-03
+Parameterization                                             DELTA
+
+Input data file(s)
+  EBB.dat
+
+Input data format  FREE
+
+
+SUMMARY OF DATA
+
+     Number of missing data patterns           100
+
+
+COVARIANCE COVERAGE OF DATA
+
+Minimum covariance coverage value   0.100
+
+
+     PROPORTION OF DATA PRESENT
+
+
+           Covariance Coverage
+              EBB5          EBB6          EBB8          EBB9          EBB13
+              ________      ________      ________      ________      ________
+ EBB5           0.962
+ EBB6           0.942         0.964
+ EBB8           0.952         0.954         0.990
+ EBB9           0.952         0.952         0.978         0.988
+ EBB13          0.950         0.952         0.978         0.979         0.988
+ EBB14          0.954         0.954         0.978         0.978         0.978
+ EBB17          0.935         0.936         0.955         0.952         0.950
+ EBB18          0.950         0.950         0.976         0.974         0.974
+ EBB20          0.957         0.959         0.985         0.983         0.983
+ EBB22          0.957         0.957         0.983         0.981         0.981
+ EBB23          0.897         0.900         0.918         0.912         0.914
+ EBB24          0.950         0.952         0.979         0.976         0.976
+ EBB26          0.952         0.954         0.981         0.978         0.978
+ EBB27          0.943         0.945         0.967         0.964         0.964
+ EBB29          0.878         0.880         0.895         0.897         0.899
+ EBB31          0.950         0.952         0.978         0.976         0.976
+ EBB34          0.897         0.893         0.916         0.914         0.918
+ EBB35          0.933         0.936         0.955         0.955         0.957
+ EBB36          0.911         0.914         0.931         0.930         0.930
+ EBB38          0.873         0.869         0.888         0.887         0.890
+
+
+           Covariance Coverage
+              EBB14         EBB17         EBB18         EBB20         EBB22
+              ________      ________      ________      ________      ________
+ EBB14          0.988
+ EBB17          0.955         0.962
+ EBB18          0.976         0.952         0.986
+ EBB20          0.983         0.957         0.981         0.995
+ EBB22          0.981         0.955         0.979         0.988         0.993
+ EBB23          0.914         0.897         0.912         0.919         0.919
+ EBB24          0.976         0.954         0.974         0.983         0.981
+ EBB26          0.978         0.952         0.978         0.985         0.983
+ EBB27          0.964         0.942         0.964         0.971         0.969
+ EBB29          0.897         0.876         0.893         0.902         0.900
+ EBB31          0.976         0.950         0.974         0.983         0.983
+ EBB34          0.916         0.897         0.911         0.919         0.919
+ EBB35          0.955         0.933         0.952         0.962         0.959
+ EBB36          0.930         0.911         0.926         0.935         0.933
+ EBB38          0.888         0.869         0.885         0.892         0.892
+
+
+           Covariance Coverage
+              EBB23         EBB24         EBB26         EBB27         EBB29
+              ________      ________      ________      ________      ________
+ EBB23          0.924
+ EBB24          0.916         0.988
+ EBB26          0.916         0.978         0.990
+ EBB27          0.904         0.966         0.967         0.976
+ EBB29          0.844         0.895         0.895         0.890         0.905
+ EBB31          0.912         0.976         0.978         0.964         0.900
+ EBB34          0.861         0.912         0.914         0.904         0.854
+ EBB35          0.902         0.954         0.955         0.943         0.885
+ EBB36          0.885         0.928         0.931         0.923         0.861
+ EBB38          0.840         0.885         0.887         0.878         0.828
+
+
+           Covariance Coverage
+              EBB31         EBB34         EBB35         EBB36         EBB38
+              ________      ________      ________      ________      ________
+ EBB31          0.988
+ EBB34          0.914         0.924
+ EBB35          0.954         0.909         0.966
+ EBB36          0.928         0.887         0.926         0.940
+ EBB38          0.887         0.847         0.880         0.861         0.897
+
+
+UNIVARIATE PROPORTIONS AND COUNTS FOR CATEGORICAL VARIABLES
+
+    EBB5
+      Category 1    0.354      198.000
+      Category 2    0.102       57.000
+      Category 3    0.545      305.000
+    EBB6
+      Category 1    0.337      189.000
+      Category 2    0.123       69.000
+      Category 3    0.540      303.000
+    EBB8
+      Category 1    0.278      160.000
+      Category 2    0.505      291.000
+      Category 3    0.161       93.000
+      Category 4    0.056       32.000
+    EBB9
+      Category 1    0.063       36.000
+      Category 2    0.374      215.000
+      Category 3    0.346      199.000
+      Category 4    0.217      125.000
+    EBB13
+      Category 1    0.391      225.000
+      Category 2    0.468      269.000
+      Category 3    0.103       59.000
+      Category 4    0.038       22.000
+    EBB14
+      Category 1    0.230      132.000
+      Category 2    0.471      271.000
+      Category 3    0.195      112.000
+      Category 4    0.104       60.000
+    EBB17
+      Category 1    0.434      243.000
+      Category 2    0.179      100.000
+      Category 3    0.387      217.000
+    EBB18
+      Category 1    0.415      238.000
+      Category 2    0.432      248.000
+      Category 3    0.098       56.000
+      Category 4    0.056       32.000
+    EBB20
+      Category 1    0.617      357.000
+      Category 2    0.306      177.000
+      Category 3    0.062       36.000
+      Category 4    0.016        9.000
+    EBB22
+      Category 1    0.401      232.000
+      Category 2    0.452      261.000
+      Category 3    0.093       54.000
+      Category 4    0.054       31.000
+    EBB23
+      Category 1    0.290      156.000
+      Category 2    0.165       89.000
+      Category 3    0.545      293.000
+    EBB24
+      Category 1    0.360      207.000
+      Category 2    0.426      245.000
+      Category 3    0.144       83.000
+      Category 4    0.070       40.000
+    EBB26
+      Category 1    0.674      388.000
+      Category 2    0.259      149.000
+      Category 3    0.043       25.000
+      Category 4    0.024       14.000
+    EBB27
+      Category 1    0.472      268.000
+      Category 2    0.377      214.000
+      Category 3    0.113       64.000
+      Category 4    0.039       22.000
+    EBB29
+      Category 1    0.452      238.000
+      Category 2    0.264      139.000
+      Category 3    0.285      150.000
+    EBB31
+      Category 1    0.532      306.000
+      Category 2    0.323      186.000
+      Category 3    0.097       56.000
+      Category 4    0.047       27.000
+    EBB34
+      Category 1    0.379      204.000
+      Category 2    0.184       99.000
+      Category 3    0.437      235.000
+    EBB35
+      Category 1    0.331      186.000
+      Category 2    0.128       72.000
+      Category 3    0.541      304.000
+    EBB36
+      Category 1    0.366      200.000
+      Category 2    0.218      119.000
+      Category 3    0.417      228.000
+    EBB38
+      Category 1    0.312      163.000
+      Category 2    0.163       85.000
+      Category 3    0.525      274.000
+
+
+
+THE MODEL ESTIMATION TERMINATED NORMALLY
+
+
+
+MODEL FIT INFORMATION
+
+Number of Free Parameters                       72
+
+Chi-Square Test of Model Fit
+
+          Value                            550.440*
+          Degrees of Freedom                   169
+          P-Value                           0.0000
+
+*   The chi-square value for MLM, MLMV, MLR, ULSMV, WLSM and WLSMV cannot be used
+    for chi-square difference testing in the regular way.  MLM, MLR and WLSM
+    chi-square difference testing is described on the Mplus website.  MLMV, WLSMV,
+    and ULSMV difference testing is done using the DIFFTEST option.
+
+RMSEA (Root Mean Square Error Of Approximation)
+
+          Estimate                           0.062
+          90 Percent C.I.                    0.057  0.068
+          Probability RMSEA <= .05           0.000
+
+CFI/TLI
+
+          CFI                                0.966
+          TLI                                0.962
+
+Chi-Square Test of Model Fit for the Baseline Model
+
+          Value                          11346.108
+          Degrees of Freedom                   190
+          P-Value                           0.0000
+
+WRMR (Weighted Root Mean Square Residual)
+
+          Value                              1.316
+
+
+
+MODEL RESULTS
+
+                                                    Two-Tailed
+                    Estimate       S.E.  Est./S.E.    P-Value
+
+ BURN     BY
+    EBB5              -0.767      0.026    -28.998      0.000
+    EBB6              -0.739      0.027    -26.974      0.000
+    EBB8               0.461      0.037     12.621      0.000
+    EBB9               0.512      0.032     15.812      0.000
+    EBB13              0.663      0.027     24.792      0.000
+    EBB14              0.740      0.019     39.477      0.000
+    EBB17             -0.571      0.033    -17.077      0.000
+    EBB18              0.601      0.030     20.032      0.000
+    EBB20              0.701      0.029     23.989      0.000
+    EBB22              0.709      0.024     29.411      0.000
+    EBB23             -0.634      0.034    -18.553      0.000
+    EBB24              0.771      0.019     40.006      0.000
+    EBB26              0.413      0.044      9.359      0.000
+    EBB27              0.648      0.027     23.726      0.000
+    EBB29             -0.453      0.040    -11.454      0.000
+    EBB31              0.698      0.027     25.646      0.000
+    EBB34             -0.599      0.034    -17.466      0.000
+    EBB35             -0.682      0.031    -21.859      0.000
+    EBB36             -0.666      0.028    -23.866      0.000
+    EBB38             -0.679      0.032    -21.142      0.000
+
+ ACQ      BY
+    EBB5               1.000      0.000    999.000    999.000
+    EBB6               1.000      0.000    999.000    999.000
+    EBB8               1.000      0.000    999.000    999.000
+    EBB9               1.000      0.000    999.000    999.000
+    EBB13              1.000      0.000    999.000    999.000
+    EBB14              1.000      0.000    999.000    999.000
+    EBB17              1.000      0.000    999.000    999.000
+    EBB18              1.000      0.000    999.000    999.000
+    EBB20              1.000      0.000    999.000    999.000
+    EBB22              1.000      0.000    999.000    999.000
+    EBB23              1.000      0.000    999.000    999.000
+    EBB24              1.000      0.000    999.000    999.000
+    EBB26              1.000      0.000    999.000    999.000
+    EBB27              1.000      0.000    999.000    999.000
+    EBB29              1.000      0.000    999.000    999.000
+    EBB31              1.000      0.000    999.000    999.000
+    EBB34              1.000      0.000    999.000    999.000
+    EBB35              1.000      0.000    999.000    999.000
+    EBB36              1.000      0.000    999.000    999.000
+    EBB38              1.000      0.000    999.000    999.000
+
+ ACQ      WITH
+    BURN               0.000      0.000    999.000    999.000
+
+ Thresholds
+    EBB5$1            -0.376      0.054     -6.913      0.000
+    EBB5$2            -0.112      0.053     -2.112      0.035
+    EBB6$1            -0.421      0.055     -7.702      0.000
+    EBB6$2            -0.101      0.053     -1.900      0.057
+    EBB8$1            -0.589      0.056    -10.591      0.000
+    EBB8$2             0.782      0.058     13.381      0.000
+    EBB8$3             1.593      0.085     18.718      0.000
+    EBB9$1            -1.533      0.082    -18.690      0.000
+    EBB9$2            -0.160      0.053     -3.043      0.002
+    EBB9$3             0.781      0.058     13.352      0.000
+    EBB13$1           -0.276      0.053     -5.206      0.000
+    EBB13$2            1.076      0.065     16.584      0.000
+    EBB13$3            1.771      0.096     18.402      0.000
+    EBB14$1           -0.740      0.058    -12.803      0.000
+    EBB14$2            0.527      0.055      9.582      0.000
+    EBB14$3            1.257      0.070     17.850      0.000
+    EBB17$1           -0.166      0.053     -3.126      0.002
+    EBB17$2            0.286      0.054      5.317      0.000
+    EBB18$1           -0.216      0.053     -4.087      0.000
+    EBB18$2            1.022      0.064     16.083      0.000
+    EBB18$3            1.591      0.085     18.686      0.000
+    EBB20$1            0.297      0.053      5.602      0.000
+    EBB20$2            1.421      0.076     18.570      0.000
+    EBB20$3            2.156      0.132     16.375      0.000
+    EBB22$1           -0.250      0.053     -4.737      0.000
+    EBB22$2            1.049      0.064     16.387      0.000
+    EBB22$3            1.611      0.086     18.742      0.000
+    EBB23$1           -0.553      0.057     -9.685      0.000
+    EBB23$2           -0.112      0.054     -2.069      0.039
+    EBB24$1           -0.358      0.054     -6.699      0.000
+    EBB24$2            0.793      0.059     13.508      0.000
+    EBB24$3            1.479      0.079     18.628      0.000
+    EBB26$1            0.450      0.054      8.303      0.000
+    EBB26$2            1.493      0.080     18.665      0.000
+    EBB26$3            1.972      0.112     17.542      0.000
+    EBB27$1           -0.071      0.053     -1.343      0.179
+    EBB27$2            1.030      0.064     16.074      0.000
+    EBB27$3            1.766      0.096     18.306      0.000
+    EBB29$1           -0.122      0.055     -2.221      0.026
+    EBB29$2            0.569      0.058      9.824      0.000
+    EBB31$1            0.081      0.052      1.543      0.123
+    EBB31$2            1.061      0.064     16.450      0.000
+    EBB31$3            1.675      0.090     18.624      0.000
+    EBB34$1           -0.308      0.055     -5.596      0.000
+    EBB34$2            0.159      0.054      2.931      0.003
+    EBB35$1           -0.437      0.055     -7.987      0.000
+    EBB35$2           -0.103      0.053     -1.940      0.052
+    EBB36$1           -0.343      0.055     -6.273      0.000
+    EBB36$2            0.210      0.054      3.888      0.000
+    EBB38$1           -0.489      0.057     -8.540      0.000
+    EBB38$2           -0.062      0.055     -1.138      0.255
+
+ Variances
+    BURN               1.000      0.000    999.000    999.000
+    ACQ                0.130      0.009     14.852      0.000
+
+
+STANDARDIZED MODEL RESULTS
+
+
+STDYX Standardization
+
+                                                    Two-Tailed
+                    Estimate       S.E.  Est./S.E.    P-Value
+
+ BURN     BY
+    EBB5              -0.767      0.026    -28.998      0.000
+    EBB6              -0.739      0.027    -26.974      0.000
+    EBB8               0.461      0.037     12.621      0.000
+    EBB9               0.512      0.032     15.812      0.000
+    EBB13              0.663      0.027     24.792      0.000
+    EBB14              0.740      0.019     39.477      0.000
+    EBB17             -0.571      0.033    -17.077      0.000
+    EBB18              0.601      0.030     20.032      0.000
+    EBB20              0.701      0.029     23.989      0.000
+    EBB22              0.709      0.024     29.411      0.000
+    EBB23             -0.634      0.034    -18.553      0.000
+    EBB24              0.771      0.019     40.006      0.000
+    EBB26              0.413      0.044      9.359      0.000
+    EBB27              0.648      0.027     23.726      0.000
+    EBB29             -0.453      0.040    -11.454      0.000
+    EBB31              0.698      0.027     25.646      0.000
+    EBB34             -0.599      0.034    -17.466      0.000
+    EBB35             -0.682      0.031    -21.859      0.000
+    EBB36             -0.666      0.028    -23.866      0.000
+    EBB38             -0.679      0.032    -21.142      0.000
+
+ ACQ      BY
+    EBB5               0.361      0.012     29.703      0.000
+    EBB6               0.361      0.012     29.703      0.000
+    EBB8               0.361      0.012     29.703      0.000
+    EBB9               0.361      0.012     29.703      0.000
+    EBB13              0.361      0.012     29.703      0.000
+    EBB14              0.361      0.012     29.703      0.000
+    EBB17              0.361      0.012     29.703      0.000
+    EBB18              0.361      0.012     29.703      0.000
+    EBB20              0.361      0.012     29.703      0.000
+    EBB22              0.361      0.012     29.703      0.000
+    EBB23              0.361      0.012     29.703      0.000
+    EBB24              0.361      0.012     29.703      0.000
+    EBB26              0.361      0.012     29.703      0.000
+    EBB27              0.361      0.012     29.703      0.000
+    EBB29              0.361      0.012     29.703      0.000
+    EBB31              0.361      0.012     29.703      0.000
+    EBB34              0.361      0.012     29.703      0.000
+    EBB35              0.361      0.012     29.703      0.000
+    EBB36              0.361      0.012     29.703      0.000
+    EBB38              0.361      0.012     29.703      0.000
+
+ ACQ      WITH
+    BURN               0.000      0.000    999.000    999.000
+
+ Thresholds
+    EBB5$1            -0.376      0.054     -6.913      0.000
+    EBB5$2            -0.112      0.053     -2.112      0.035
+    EBB6$1            -0.421      0.055     -7.702      0.000
+    EBB6$2            -0.101      0.053     -1.900      0.057
+    EBB8$1            -0.589      0.056    -10.591      0.000
+    EBB8$2             0.782      0.058     13.381      0.000
+    EBB8$3             1.593      0.085     18.718      0.000
+    EBB9$1            -1.533      0.082    -18.690      0.000
+    EBB9$2            -0.160      0.053     -3.043      0.002
+    EBB9$3             0.781      0.058     13.352      0.000
+    EBB13$1           -0.276      0.053     -5.206      0.000
+    EBB13$2            1.076      0.065     16.584      0.000
+    EBB13$3            1.771      0.096     18.402      0.000
+    EBB14$1           -0.740      0.058    -12.803      0.000
+    EBB14$2            0.527      0.055      9.582      0.000
+    EBB14$3            1.257      0.070     17.850      0.000
+    EBB17$1           -0.166      0.053     -3.126      0.002
+    EBB17$2            0.286      0.054      5.317      0.000
+    EBB18$1           -0.216      0.053     -4.087      0.000
+    EBB18$2            1.022      0.064     16.083      0.000
+    EBB18$3            1.591      0.085     18.686      0.000
+    EBB20$1            0.297      0.053      5.602      0.000
+    EBB20$2            1.421      0.076     18.570      0.000
+    EBB20$3            2.156      0.132     16.375      0.000
+    EBB22$1           -0.250      0.053     -4.737      0.000
+    EBB22$2            1.049      0.064     16.387      0.000
+    EBB22$3            1.611      0.086     18.742      0.000
+    EBB23$1           -0.553      0.057     -9.685      0.000
+    EBB23$2           -0.112      0.054     -2.069      0.039
+    EBB24$1           -0.358      0.054     -6.699      0.000
+    EBB24$2            0.793      0.059     13.508      0.000
+    EBB24$3            1.479      0.079     18.628      0.000
+    EBB26$1            0.450      0.054      8.303      0.000
+    EBB26$2            1.493      0.080     18.665      0.000
+    EBB26$3            1.972      0.112     17.542      0.000
+    EBB27$1           -0.071      0.053     -1.343      0.179
+    EBB27$2            1.030      0.064     16.074      0.000
+    EBB27$3            1.766      0.096     18.306      0.000
+    EBB29$1           -0.122      0.055     -2.221      0.026
+    EBB29$2            0.569      0.058      9.824      0.000
+    EBB31$1            0.081      0.052      1.543      0.123
+    EBB31$2            1.061      0.064     16.450      0.000
+    EBB31$3            1.675      0.090     18.624      0.000
+    EBB34$1           -0.308      0.055     -5.596      0.000
+    EBB34$2            0.159      0.054      2.931      0.003
+    EBB35$1           -0.437      0.055     -7.987      0.000
+    EBB35$2           -0.103      0.053     -1.940      0.052
+    EBB36$1           -0.343      0.055     -6.273      0.000
+    EBB36$2            0.210      0.054      3.888      0.000
+    EBB38$1           -0.489      0.057     -8.540      0.000
+    EBB38$2           -0.062      0.055     -1.138      0.255
+
+ Variances
+    BURN               1.000      0.000    999.000    999.000
+    ACQ                1.000      0.000    999.000    999.000
+
+
+STDY Standardization
+
+                                                    Two-Tailed
+                    Estimate       S.E.  Est./S.E.    P-Value
+
+ BURN     BY
+    EBB5              -0.767      0.026    -28.998      0.000
+    EBB6              -0.739      0.027    -26.974      0.000
+    EBB8               0.461      0.037     12.621      0.000
+    EBB9               0.512      0.032     15.812      0.000
+    EBB13              0.663      0.027     24.792      0.000
+    EBB14              0.740      0.019     39.477      0.000
+    EBB17             -0.571      0.033    -17.077      0.000
+    EBB18              0.601      0.030     20.032      0.000
+    EBB20              0.701      0.029     23.989      0.000
+    EBB22              0.709      0.024     29.411      0.000
+    EBB23             -0.634      0.034    -18.553      0.000
+    EBB24              0.771      0.019     40.006      0.000
+    EBB26              0.413      0.044      9.359      0.000
+    EBB27              0.648      0.027     23.726      0.000
+    EBB29             -0.453      0.040    -11.454      0.000
+    EBB31              0.698      0.027     25.646      0.000
+    EBB34             -0.599      0.034    -17.466      0.000
+    EBB35             -0.682      0.031    -21.859      0.000
+    EBB36             -0.666      0.028    -23.866      0.000
+    EBB38             -0.679      0.032    -21.142      0.000
+
+ ACQ      BY
+    EBB5               0.361      0.012     29.703      0.000
+    EBB6               0.361      0.012     29.703      0.000
+    EBB8               0.361      0.012     29.703      0.000
+    EBB9               0.361      0.012     29.703      0.000
+    EBB13              0.361      0.012     29.703      0.000
+    EBB14              0.361      0.012     29.703      0.000
+    EBB17              0.361      0.012     29.703      0.000
+    EBB18              0.361      0.012     29.703      0.000
+    EBB20              0.361      0.012     29.703      0.000
+    EBB22              0.361      0.012     29.703      0.000
+    EBB23              0.361      0.012     29.703      0.000
+    EBB24              0.361      0.012     29.703      0.000
+    EBB26              0.361      0.012     29.703      0.000
+    EBB27              0.361      0.012     29.703      0.000
+    EBB29              0.361      0.012     29.703      0.000
+    EBB31              0.361      0.012     29.703      0.000
+    EBB34              0.361      0.012     29.703      0.000
+    EBB35              0.361      0.012     29.703      0.000
+    EBB36              0.361      0.012     29.703      0.000
+    EBB38              0.361      0.012     29.703      0.000
+
+ ACQ      WITH
+    BURN               0.000      0.000    999.000    999.000
+
+ Thresholds
+    EBB5$1            -0.376      0.054     -6.913      0.000
+    EBB5$2            -0.112      0.053     -2.112      0.035
+    EBB6$1            -0.421      0.055     -7.702      0.000
+    EBB6$2            -0.101      0.053     -1.900      0.057
+    EBB8$1            -0.589      0.056    -10.591      0.000
+    EBB8$2             0.782      0.058     13.381      0.000
+    EBB8$3             1.593      0.085     18.718      0.000
+    EBB9$1            -1.533      0.082    -18.690      0.000
+    EBB9$2            -0.160      0.053     -3.043      0.002
+    EBB9$3             0.781      0.058     13.352      0.000
+    EBB13$1           -0.276      0.053     -5.206      0.000
+    EBB13$2            1.076      0.065     16.584      0.000
+    EBB13$3            1.771      0.096     18.402      0.000
+    EBB14$1           -0.740      0.058    -12.803      0.000
+    EBB14$2            0.527      0.055      9.582      0.000
+    EBB14$3            1.257      0.070     17.850      0.000
+    EBB17$1           -0.166      0.053     -3.126      0.002
+    EBB17$2            0.286      0.054      5.317      0.000
+    EBB18$1           -0.216      0.053     -4.087      0.000
+    EBB18$2            1.022      0.064     16.083      0.000
+    EBB18$3            1.591      0.085     18.686      0.000
+    EBB20$1            0.297      0.053      5.602      0.000
+    EBB20$2            1.421      0.076     18.570      0.000
+    EBB20$3            2.156      0.132     16.375      0.000
+    EBB22$1           -0.250      0.053     -4.737      0.000
+    EBB22$2            1.049      0.064     16.387      0.000
+    EBB22$3            1.611      0.086     18.742      0.000
+    EBB23$1           -0.553      0.057     -9.685      0.000
+    EBB23$2           -0.112      0.054     -2.069      0.039
+    EBB24$1           -0.358      0.054     -6.699      0.000
+    EBB24$2            0.793      0.059     13.508      0.000
+    EBB24$3            1.479      0.079     18.628      0.000
+    EBB26$1            0.450      0.054      8.303      0.000
+    EBB26$2            1.493      0.080     18.665      0.000
+    EBB26$3            1.972      0.112     17.542      0.000
+    EBB27$1           -0.071      0.053     -1.343      0.179
+    EBB27$2            1.030      0.064     16.074      0.000
+    EBB27$3            1.766      0.096     18.306      0.000
+    EBB29$1           -0.122      0.055     -2.221      0.026
+    EBB29$2            0.569      0.058      9.824      0.000
+    EBB31$1            0.081      0.052      1.543      0.123
+    EBB31$2            1.061      0.064     16.450      0.000
+    EBB31$3            1.675      0.090     18.624      0.000
+    EBB34$1           -0.308      0.055     -5.596      0.000
+    EBB34$2            0.159      0.054      2.931      0.003
+    EBB35$1           -0.437      0.055     -7.987      0.000
+    EBB35$2           -0.103      0.053     -1.940      0.052
+    EBB36$1           -0.343      0.055     -6.273      0.000
+    EBB36$2            0.210      0.054      3.888      0.000
+    EBB38$1           -0.489      0.057     -8.540      0.000
+    EBB38$2           -0.062      0.055     -1.138      0.255
+
+ Variances
+    BURN               1.000      0.000    999.000    999.000
+    ACQ                1.000      0.000    999.000    999.000
+
+
+STD Standardization
+
+                                                    Two-Tailed
+                    Estimate       S.E.  Est./S.E.    P-Value
+
+ BURN     BY
+    EBB5              -0.767      0.026    -28.998      0.000
+    EBB6              -0.739      0.027    -26.974      0.000
+    EBB8               0.461      0.037     12.621      0.000
+    EBB9               0.512      0.032     15.812      0.000
+    EBB13              0.663      0.027     24.792      0.000
+    EBB14              0.740      0.019     39.477      0.000
+    EBB17             -0.571      0.033    -17.077      0.000
+    EBB18              0.601      0.030     20.032      0.000
+    EBB20              0.701      0.029     23.989      0.000
+    EBB22              0.709      0.024     29.411      0.000
+    EBB23             -0.634      0.034    -18.553      0.000
+    EBB24              0.771      0.019     40.006      0.000
+    EBB26              0.413      0.044      9.359      0.000
+    EBB27              0.648      0.027     23.726      0.000
+    EBB29             -0.453      0.040    -11.454      0.000
+    EBB31              0.698      0.027     25.646      0.000
+    EBB34             -0.599      0.034    -17.466      0.000
+    EBB35             -0.682      0.031    -21.859      0.000
+    EBB36             -0.666      0.028    -23.866      0.000
+    EBB38             -0.679      0.032    -21.142      0.000
+
+ ACQ      BY
+    EBB5               0.361      0.012     29.703      0.000
+    EBB6               0.361      0.012     29.703      0.000
+    EBB8               0.361      0.012     29.703      0.000
+    EBB9               0.361      0.012     29.703      0.000
+    EBB13              0.361      0.012     29.703      0.000
+    EBB14              0.361      0.012     29.703      0.000
+    EBB17              0.361      0.012     29.703      0.000
+    EBB18              0.361      0.012     29.703      0.000
+    EBB20              0.361      0.012     29.703      0.000
+    EBB22              0.361      0.012     29.703      0.000
+    EBB23              0.361      0.012     29.703      0.000
+    EBB24              0.361      0.012     29.703      0.000
+    EBB26              0.361      0.012     29.703      0.000
+    EBB27              0.361      0.012     29.703      0.000
+    EBB29              0.361      0.012     29.703      0.000
+    EBB31              0.361      0.012     29.703      0.000
+    EBB34              0.361      0.012     29.703      0.000
+    EBB35              0.361      0.012     29.703      0.000
+    EBB36              0.361      0.012     29.703      0.000
+    EBB38              0.361      0.012     29.703      0.000
+
+ ACQ      WITH
+    BURN               0.000      0.000    999.000    999.000
+
+ Thresholds
+    EBB5$1            -0.376      0.054     -6.913      0.000
+    EBB5$2            -0.112      0.053     -2.112      0.035
+    EBB6$1            -0.421      0.055     -7.702      0.000
+    EBB6$2            -0.101      0.053     -1.900      0.057
+    EBB8$1            -0.589      0.056    -10.591      0.000
+    EBB8$2             0.782      0.058     13.381      0.000
+    EBB8$3             1.593      0.085     18.718      0.000
+    EBB9$1            -1.533      0.082    -18.690      0.000
+    EBB9$2            -0.160      0.053     -3.043      0.002
+    EBB9$3             0.781      0.058     13.352      0.000
+    EBB13$1           -0.276      0.053     -5.206      0.000
+    EBB13$2            1.076      0.065     16.584      0.000
+    EBB13$3            1.771      0.096     18.402      0.000
+    EBB14$1           -0.740      0.058    -12.803      0.000
+    EBB14$2            0.527      0.055      9.582      0.000
+    EBB14$3            1.257      0.070     17.850      0.000
+    EBB17$1           -0.166      0.053     -3.126      0.002
+    EBB17$2            0.286      0.054      5.317      0.000
+    EBB18$1           -0.216      0.053     -4.087      0.000
+    EBB18$2            1.022      0.064     16.083      0.000
+    EBB18$3            1.591      0.085     18.686      0.000
+    EBB20$1            0.297      0.053      5.602      0.000
+    EBB20$2            1.421      0.076     18.570      0.000
+    EBB20$3            2.156      0.132     16.375      0.000
+    EBB22$1           -0.250      0.053     -4.737      0.000
+    EBB22$2            1.049      0.064     16.387      0.000
+    EBB22$3            1.611      0.086     18.742      0.000
+    EBB23$1           -0.553      0.057     -9.685      0.000
+    EBB23$2           -0.112      0.054     -2.069      0.039
+    EBB24$1           -0.358      0.054     -6.699      0.000
+    EBB24$2            0.793      0.059     13.508      0.000
+    EBB24$3            1.479      0.079     18.628      0.000
+    EBB26$1            0.450      0.054      8.303      0.000
+    EBB26$2            1.493      0.080     18.665      0.000
+    EBB26$3            1.972      0.112     17.542      0.000
+    EBB27$1           -0.071      0.053     -1.343      0.179
+    EBB27$2            1.030      0.064     16.074      0.000
+    EBB27$3            1.766      0.096     18.306      0.000
+    EBB29$1           -0.122      0.055     -2.221      0.026
+    EBB29$2            0.569      0.058      9.824      0.000
+    EBB31$1            0.081      0.052      1.543      0.123
+    EBB31$2            1.061      0.064     16.450      0.000
+    EBB31$3            1.675      0.090     18.624      0.000
+    EBB34$1           -0.308      0.055     -5.596      0.000
+    EBB34$2            0.159      0.054      2.931      0.003
+    EBB35$1           -0.437      0.055     -7.987      0.000
+    EBB35$2           -0.103      0.053     -1.940      0.052
+    EBB36$1           -0.343      0.055     -6.273      0.000
+    EBB36$2            0.210      0.054      3.888      0.000
+    EBB38$1           -0.489      0.057     -8.540      0.000
+    EBB38$2           -0.062      0.055     -1.138      0.255
+
+ Variances
+    BURN               1.000      0.000    999.000    999.000
+    ACQ                1.000      0.000    999.000    999.000
+
+
+R-SQUARE
+
+    Observed                                        Two-Tailed   Residual
+    Variable        Estimate       S.E.  Est./S.E.    P-Value    Variance
+
+    EBB5               0.719      0.040     17.934      0.000      0.281
+    EBB6               0.676      0.040     16.902      0.000      0.324
+    EBB8               0.343      0.034     10.171      0.000      0.657
+    EBB9               0.392      0.032     12.385      0.000      0.608
+    EBB13              0.570      0.034     16.578      0.000      0.430
+    EBB14              0.678      0.026     26.293      0.000      0.322
+    EBB17              0.456      0.038     12.023      0.000      0.544
+    EBB18              0.492      0.036     13.815      0.000      0.508
+    EBB20              0.622      0.040     15.448      0.000      0.378
+    EBB22              0.633      0.033     19.365      0.000      0.367
+    EBB23              0.532      0.044     12.140      0.000      0.468
+    EBB24              0.724      0.027     26.604      0.000      0.276
+    EBB26              0.301      0.037      8.180      0.000      0.699
+    EBB27              0.551      0.034     16.066      0.000      0.449
+    EBB29              0.335      0.037      9.117      0.000      0.665
+    EBB31              0.618      0.037     16.485      0.000      0.382
+    EBB34              0.490      0.041     12.028      0.000      0.510
+    EBB35              0.595      0.042     14.180      0.000      0.405
+    EBB36              0.574      0.038     15.175      0.000      0.426
+    EBB38              0.591      0.043     13.701      0.000      0.409
+
+
+QUALITY OF NUMERICAL RESULTS
+
+     Condition Number for the Information Matrix              0.635E-03
+       (ratio of smallest to largest eigenvalue)
+
+
+MODEL MODIFICATION INDICES
+
+NOTE:  Modification indices for direct effects of observed dependent variables
+regressed on covariates and residual covariances among observed dependent
+variables may not be included.  To include these, request MODINDICES (ALL).
+
+Minimum M.I. value for printing the modification index    10.000
+
+                                   M.I.     E.P.C.  Std E.P.C.  StdYX E.P.C.
+
+BY Statements
+
+ACQ      BY EBB8                  12.341    -0.276     -0.100       -0.100
+ACQ      BY EBB23                 10.716    -0.282     -0.102       -0.102
+ACQ      BY EBB24                 12.739     0.258      0.093        0.093
+ACQ      BY EBB26                 22.291    -0.421     -0.152       -0.152
+ACQ      BY EBB27                 34.744     0.466      0.168        0.168
+ACQ      BY EBB35                 10.148     0.265      0.096        0.096
+
+
+DIAGRAM INFORMATION
+
+  Use View Diagram under the Diagram menu in the Mplus Editor to view the diagram.
+  If running Mplus from the Mplus Diagrammer, the diagram opens automatically.
+
+  Diagram output
+    c:\users\hauck\onedrive\google drive\manuscritos\manuscrito hugo, mak, jheny\ebb.dgm
+
+     Beginning Time:  15:14:15
+        Ending Time:  15:14:18
+       Elapsed Time:  00:00:03
+
+
+
+MUTHEN & MUTHEN
+3463 Stoner Ave.
+Los Angeles, CA  90066
+
+Tel: (310) 391-9971
+Fax: (310) 391-8971
+Web: www.StatModel.com
+Support: Support@StatModel.com
+
+Copyright (c) 1998-2013 Muthen & Muthen
